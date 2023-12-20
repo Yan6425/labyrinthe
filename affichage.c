@@ -14,7 +14,7 @@ void afficherLabyrinthe(int** labyrinthe,int a, int b, joueur u){
                 printf("█");
             }
             else if ((u->x==i) && (u->y==j)){
-                printf("☺");
+                printf("\033[1;33m☺\033[0m");
             }
             else if (labyrinthe[i][j]==1){
                 printf("[");
@@ -32,7 +32,9 @@ void afficherLabyrinthe(int** labyrinthe,int a, int b, joueur u){
 
 void afficherVie(joueur j){
     printf("Vie : ");
+    printf("\033[1;31m");
     for (int i=0;i<j->vie;i++){
         printf("♥");
     }
+    printf("\033[0m");
 }
