@@ -42,4 +42,5 @@ void afficherVie(Joueur j){
     for (int i=0;i<j->vie;i++){
         printf("♥");
     }
+    printf("\033[0m");
 }

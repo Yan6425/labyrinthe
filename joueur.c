@@ -87,25 +87,25 @@ int estMort(Joueur j){
     }
 }
 
-int valeurCase(int** labyrinthe,Joueur j){
-    return labyrinthe[j->x][j->y]; 
-}
+// int valeurCase(int** labyrinthe,Joueur j){
+//     return labyrinthe[j->x][j->y]; 
+// }
 
-void actionCase(int** labyrinthe, Joueur j){
-    int cellule=valeurCase(labyrinthe,j);
-    switch(cellule){
-        case 6: 
-            if(j->vie < 3){
-                j->vie=(j->vie)+1;
-                retirerPotion(valeurCase(labyrinthe));
-            }
-            break;
-        case 3:
-            j->vision=(j->vision)+2;
-        case 1:
-            break;
-    }
-}
+// void actionCase(int** labyrinthe, Joueur j){
+//     int cellule=valeurCase(labyrinthe,j);
+//     switch(cellule){
+//         case 6: 
+//             if(j->vie < 3){
+//                 j->vie=(j->vie)+1;
+//                 retirerPotion(valeurCase(labyrinthe));
+//             }
+//             break;
+//         case 3:
+//             j->vision=(j->vision)+2;
+//         case 1:
+//             break;
+//     }
+// }
 
 int deplacement(int** labyrinthe,Joueur j){
     struct termios tty_opts_backup, tty_opts_raw;
@@ -184,7 +184,7 @@ int deplacement(int** labyrinthe,Joueur j){
             default:
                 break;
         }
-        actionCase(labyrinthe,j);
+        // actionCase(labyrinthe,j);
         if (estMort(j)){
             pastermine=0;
             printf("\n\rTu es mort !");
