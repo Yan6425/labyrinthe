@@ -13,19 +13,22 @@ void afficherLabyrinthe(int** labyrinthe,int hauteur, int largeur, Joueur joueur
             if ((i<0) || (j<0) || (i>=hauteur) || (j>=largeur)){
                 printf(" ");
             }
-            else if (labyrinthe[i][j]==-1){
+            else if (labyrinthe[i][j]==2){
                 printf("█");
             }
             else if ((joueur->x==i) && (joueur->y==j)){
                 printf("\033[1;33m☺\033[0m");
             }
-            else if (labyrinthe[i][j]==1){
-                printf("[");
+            else if (labyrinthe[i][j]==4){
+                printf("p");
             }
-            else if (labyrinthe[i][j]==2){
-                printf("]");
+            else if (labyrinthe[i][j]==3){
+                printf("v");
             }
             else if (labyrinthe[i][j]==0){
+                printf("O");
+            }
+            else if (labyrinthe[i][j]==1){
                 printf(" ");
             }
         }
@@ -39,5 +42,4 @@ void afficherVie(Joueur j){
     for (int i=0;i<j->vie;i++){
         printf("♥");
     }
-    printf("\033[0m");
 }

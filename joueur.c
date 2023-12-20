@@ -16,7 +16,7 @@ Joueur creerJoueur(Joueur j){
 }
 
 int caseLibre(int** labyrinthe,int x, int y){
-    if (labyrinthe[x][y]==-1){
+    if (labyrinthe[x][y]==2){
         return 0;
     }
     else{
@@ -25,7 +25,7 @@ int caseLibre(int** labyrinthe,int x, int y){
 }
 
 int victoire(int** labyrinthe,Joueur j){
-    if (labyrinthe[j->x][j->y]==2){
+    if (labyrinthe[j->x][j->y]==0){
         return 1;
     }
     else {
@@ -91,10 +91,18 @@ int valeurCase(int** labyrinthe,Joueur j){
     return labyrinthe[j->x][j->y]; 
 }
 
-void actionCase(int** labyrinthe,Joueur j){
+void actionCase(int** labyrinthe, Joueur j){
     int cellule=valeurCase(labyrinthe,j);
     switch(cellule){
-        case 0:
+        case 6: 
+            if(j->vie < 3){
+                j->vie=(j->vie)+1;
+                retirerPotion(valeurCase(labyrinthe));
+            }
+            break;
+        case 3:
+            j->vision=(j->vision)+2;
+        case 1:
             break;
     }
 }
@@ -122,7 +130,7 @@ int deplacement(int** labyrinthe,Joueur j){
     while (pastermine){
         printf("\x1b[2J\x1b[H");
         afficherLabyrinthe(labyrinthe,3,7,j);
-        afficherVie(j);    
+        afficherVie(j); 
         // ZQSD
         c =getchar();
         switch(c){
