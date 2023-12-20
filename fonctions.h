@@ -17,6 +17,7 @@ joueur bouclierPlus(joueur j, int shield);
 joueur bouclierMoins(joueur j, int shield);
 int estMort(joueur j);
 int valeurCase(int** labyrinthe,joueur j);
+void retirerPotion(int cellule)
 void actionCase(int** labyrinthe,joueur j);
 int deplacement(int** labyrinthe,joueur j);
 
@@ -24,6 +25,7 @@ int deplacement(int** labyrinthe,joueur j);
 // affichage.c
 void afficherLabyrinthe(int** labyrinthe,int a, int b, joueur u);
 void afficherVie(joueur j);
+void afficherVision(joueur j);
 
 
 // plateau.c

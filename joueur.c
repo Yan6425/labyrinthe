@@ -91,9 +91,31 @@ int valeurCase(int** labyrinthe,joueur j){
     return labyrinthe[j->x][j->y]; 
 }
 
+void retirerPotion(int cellule){
+	FILE* lab = NULL;
+    lab = fopen("labyrinthe.txt", "w");
+    if (lab == NULL) {
+        printf("Erreur ouverture fichier \n");
+    }
+    else {
+        fseek(fichier, 5, SEEK_SET);
+        fputc('1', fichier);
+    }
+    fclose(lab);
+}
+
+
 void actionCase(int** labyrinthe,joueur j){
     int cellule=valeurCase(labyrinthe,j);
     switch(cellule){
+        case 6: 
+            if(j->vie < 3){
+                j->vie=(j->vie)+1;
+                retirerPotion(valeurCase(labyrinthe));
+            }
+            break;
+        case 3:
+            j->vision=(j->vision)+2;
         case 1:
             break;
     }
@@ -122,7 +144,7 @@ int deplacement(int** labyrinthe,joueur j){
     while (pastermine){
         printf("\x1b[2J\x1b[H");
         afficherLabyrinthe(labyrinthe,3,7,j);
-        afficherVie(j);    
+        afficherVie(j); 
         // ZQSD
         c =getchar();
         switch(c){

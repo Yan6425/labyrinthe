@@ -16,6 +16,12 @@ void afficherLabyrinthe(int** labyrinthe,int a, int b, joueur u){
             else if ((u->x==i) && (u->y==j)){
                 printf("☺");
             }
+            else if (labyrinthe[i][j]==4){
+                printf("p");
+            }
+            else if (labyrinthe[i][j]==3){
+                printf("v");
+            }
             else if (labyrinthe[i][j]==0){
                 printf("O");
             }
@@ -32,4 +38,8 @@ void afficherVie(joueur j){
     for (int i=0;i<j->vie;i++){
         printf("♥");
     }
+}
+
+void afficherVision(joueur j){
+    printf("Vision : %d", j->vision);
 }
