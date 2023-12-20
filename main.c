@@ -7,8 +7,8 @@
 #include <string.h>
 
 int main(){
-    joueur j;
-    j=malloc(1*sizeof(joueur));
+    Joueur j;
+    j=malloc(1*sizeof(Joueur));
     j=creerJoueur(j);
     int** labyrinthe;
     labyrinthe=allouerLabyrinthe(3,7);

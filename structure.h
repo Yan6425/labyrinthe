@@ -10,7 +10,7 @@ typedef struct humain{
     int bouclier;
     int vision;
 }humain;
-typedef humain* joueur;
+typedef humain* Joueur;
 
 
 // affichage.c

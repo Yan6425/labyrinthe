@@ -6,12 +6,12 @@
 #include <termios.h>
 #include <string.h>
 
-joueur creerJoueur(joueur j){
+Joueur creerJoueur(Joueur j){
     j->x=1;
     j->y=1;
     j->vie=3;
     j->bouclier=0;
-    j->vision=0;
+    j->vision=2;
     return j;
 }
 
@@ -24,7 +24,7 @@ int caseLibre(int** labyrinthe,int x, int y){
     }
 }
 
-int victoire(int** labyrinthe,joueur j){
+int victoire(int** labyrinthe,Joueur j){
     if (labyrinthe[j->x][j->y]==2){
         return 1;
     }
@@ -38,47 +38,47 @@ void emptyBuffer() {
   while (((c = getchar()) != '\n') && (c != EOF));
 }
 
-joueur haut(joueur j){
+Joueur haut(Joueur j){
     (j->x)++;
     return j;
 }
 
-joueur bas(joueur j){
+Joueur bas(Joueur j){
     (j->x)--;
     return j;
 }
 
-joueur droite(joueur j){
+Joueur droite(Joueur j){
     (j->y)++;
     return j;
 }
 
-joueur gauche(joueur j){
+Joueur gauche(Joueur j){
     (j->y)--;
     return j;
 }
 
-joueur degat(joueur j,int damage){
+Joueur degat(Joueur j,int damage){
     j->vie=(j->vie)-damage;
     return j;
 }
 
-joueur soin(joueur j, int heal){
+Joueur soin(Joueur j, int heal){
     j->vie=(j->vie)+heal;
     return j;
 }
 
-joueur bouclierPlus(joueur j, int shield){
+Joueur bouclierPlus(Joueur j, int shield){
     j->bouclier=(j->bouclier)+shield;
     return j;
 }
 
-joueur bouclierMoins(joueur j, int shield){
+Joueur bouclierMoins(Joueur j, int shield){
     j->bouclier=(j->bouclier)-shield;
     return j;
 }
 
-int estMort(joueur j){
+int estMort(Joueur j){
     if (j->vie==0){
         return 1;
     }
@@ -87,11 +87,11 @@ int estMort(joueur j){
     }
 }
 
-int valeurCase(int** labyrinthe,joueur j){
+int valeurCase(int** labyrinthe,Joueur j){
     return labyrinthe[j->x][j->y]; 
 }
 
-void actionCase(int** labyrinthe,joueur j){
+void actionCase(int** labyrinthe,Joueur j){
     int cellule=valeurCase(labyrinthe,j);
     switch(cellule){
         case 0:
@@ -99,7 +99,7 @@ void actionCase(int** labyrinthe,joueur j){
     }
 }
 
-int deplacement(int** labyrinthe,joueur j){
+int deplacement(int** labyrinthe,Joueur j){
     struct termios tty_opts_backup, tty_opts_raw;
     char c;
     int pastermine=1;//par défaut on le met à vrai
