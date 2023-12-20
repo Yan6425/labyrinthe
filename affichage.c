@@ -10,19 +10,16 @@ void afficherLabyrinthe(int** labyrinthe,int a, int b, joueur u){
     printf("\n\r");
     for (int i=0;i<a;i++){
         for (int j=0; j<b; j++){
-            if (labyrinthe[i][j]==-1){
+            if (labyrinthe[i][j]==2){
                 printf("█");
             }
             else if ((u->x==i) && (u->y==j)){
                 printf("☺");
             }
-            else if (labyrinthe[i][j]==1){
-                printf("[");
-            }
-            else if (labyrinthe[i][j]==2){
-                printf("]");
-            }
             else if (labyrinthe[i][j]==0){
+                printf("O");
+            }
+            else if (labyrinthe[i][j]==1){
                 printf(" ");
             }
         }

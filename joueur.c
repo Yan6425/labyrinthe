@@ -16,7 +16,7 @@ joueur creerJoueur(joueur j){
 }
 
 int caseLibre(int** labyrinthe,int x, int y){
-    if (labyrinthe[x][y]==-1){
+    if (labyrinthe[x][y]==2){
         return 0;
     }
     else{
@@ -25,7 +25,7 @@ int caseLibre(int** labyrinthe,int x, int y){
 }
 
 int victoire(int** labyrinthe,joueur j){
-    if (labyrinthe[j->x][j->y]==2){
+    if (labyrinthe[j->x][j->y]==0){
         return 1;
     }
     else {
@@ -94,7 +94,7 @@ int valeurCase(int** labyrinthe,joueur j){
 void actionCase(int** labyrinthe,joueur j){
     int cellule=valeurCase(labyrinthe,j);
     switch(cellule){
-        case 0:
+        case 1:
             break;
     }
 }
