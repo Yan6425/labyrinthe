@@ -108,6 +108,7 @@ int deplacement(int** labyrinthe,joueur j){
     tcsetattr(STDIN_FILENO, TCSANOW, &tty_opts_raw);
 
     while (pastermine){
+        printf("\x1b[2J\x1b[H");
         afficherLabyrinthe(labyrinthe,3,7,j);
         afficherVie(j);    
         // ZQSD
@@ -165,14 +166,14 @@ int deplacement(int** labyrinthe,joueur j){
         }
         if (estMort(j)){
             pastermine=0;
-            printf("Tu es mort !");
+            printf("\n\rTu es mort !");
         }
         if (victoire(labyrinthe,j)){
+            printf("\x1b[2J\x1b[H");
             pastermine=0;
             afficherLabyrinthe(labyrinthe,3,7,j);
             printf("Win");
         }
-        printf("\x1b[2J\x1b[H");
     }
 
 

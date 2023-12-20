@@ -15,6 +15,7 @@ int main(){
     initialiserLabyrinthe(labyrinthe,3,7);
     lireTXT(labyrinthe);
     afficherLabyrinthe(labyrinthe,3,7,j);
+    deplacement(labyrinthe,j);
     return 0;
     return 0;
 }
