@@ -15,7 +15,7 @@ joueur creerJoueur(joueur j){
     return j;
 }
 
-int verifie(int** labyrinthe,int x, int y){
+int caseLibre(int** labyrinthe,int x, int y){
     if (labyrinthe[x][y]==-1){
         return 0;
     }
@@ -87,6 +87,18 @@ int estMort(joueur j){
     }
 }
 
+int valeurCase(int** labyrinthe,joueur j){
+    return labyrinthe[j->x][j->y]; 
+}
+
+void actionCase(int** labyrinthe,joueur j){
+    int cellule=valeurCase(labyrinthe,j);
+    switch(cellule){
+        case 0:
+            break;
+    }
+}
+
 int deplacement(int** labyrinthe,joueur j){
     struct termios tty_opts_backup, tty_opts_raw;
     char c;
@@ -122,7 +134,7 @@ int deplacement(int** labyrinthe,joueur j){
                     int b=j->y;
                     switch(c){
                         case 'A':
-                            if (verifie(labyrinthe,a-1,b)){
+                            if (caseLibre(labyrinthe,a-1,b)){
                                 haut(j);
                             }
                             else{
@@ -130,7 +142,7 @@ int deplacement(int** labyrinthe,joueur j){
                             }
                             break;
                         case 'B':
-                            if (verifie(labyrinthe,a+1,b)){
+                            if (caseLibre(labyrinthe,a+1,b)){
                                 bas(j);
                             }
                             else{
@@ -138,7 +150,7 @@ int deplacement(int** labyrinthe,joueur j){
                             }
                             break;
                         case 'C':
-                            if (verifie(labyrinthe,a,b+1)){
+                            if (caseLibre(labyrinthe,a,b+1)){
                                 droite(j);
                             }
                             else{
@@ -146,7 +158,7 @@ int deplacement(int** labyrinthe,joueur j){
                             }
                             break;
                         case 'D':
-                            if (verifie(labyrinthe,a,b-1)){
+                            if (caseLibre(labyrinthe,a,b-1)){
                                 gauche(j);
                             }
                             else{
@@ -164,6 +176,7 @@ int deplacement(int** labyrinthe,joueur j){
             default:
                 break;
         }
+        actionCase(labyrinthe,j);
         if (estMort(j)){
             pastermine=0;
             printf("\n\rTu es mort !");

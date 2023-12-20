@@ -4,7 +4,7 @@
 
 // joueur.c
 joueur creerJoueur(joueur j);
-int verifie(int** labyrinthe,int x, int y);
+int caseLibre(int** labyrinthe,int x, int y);
 int victoire(int** labyrinthe,joueur j);
 void emptyBuffer();
 joueur haut(joueur j);
@@ -16,6 +16,8 @@ joueur soin(joueur j, int heal);
 joueur bouclierPlus(joueur j, int shield);
 joueur bouclierMoins(joueur j, int shield);
 int estMort(joueur j);
+int valeurCase(int** labyrinthe,joueur j);
+void actionCase(int** labyrinthe,joueur j);
 int deplacement(int** labyrinthe,joueur j);
 
 
