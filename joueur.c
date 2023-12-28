@@ -91,17 +91,23 @@ int valeurCase(int** labyrinthe,Joueur j){
     return labyrinthe[j->x][j->y]; 
 }
 
+void retirerPotion(int** labyrinthe, Joueur j){
+    labyrinthe[j->x][j->y]=1;  
+}
+
 void actionCase(int** labyrinthe, Joueur j){
     int cellule=valeurCase(labyrinthe,j);
     switch(cellule){
-        case 6: 
+        case 4: 
             if(j->vie < 3){
                 j->vie=(j->vie)+1;
-                retirerPotion(valeurCase(labyrinthe));
+                retirerPotion(labyrinthe,j);
             }
+            
             break;
         case 3:
             j->vision=(j->vision)+2;
+            retirerPotion(labyrinthe,j);
         case 1:
             break;
     }

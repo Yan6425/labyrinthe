@@ -17,6 +17,7 @@ Joueur bouclierPlus(Joueur j, int shield);
 Joueur bouclierMoins(Joueur j, int shield);
 int estMort(Joueur j);
 int valeurCase(int** labyrinthe,Joueur j);
+void retirerPotion(int** labyrinthe, Joueur j);
 void actionCase(int** labyrinthe,Joueur j);
 int deplacement(int** labyrinthe,Joueur j);
 
