@@ -4,7 +4,7 @@
 
 // joueur.c
 Joueur creerJoueur(Joueur j);
-int caseLibre(int** labyrinthe,int x, int y);
+int caseLibre(int** labyrinthe,int hauteur, int largeur, int x, int y);
 int victoire(int** labyrinthe,Joueur j);
 void emptyBuffer();
 Joueur haut(Joueur j);

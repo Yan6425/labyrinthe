@@ -15,12 +15,17 @@ Joueur creerJoueur(Joueur j){
     return j;
 }
 
-int caseLibre(int** labyrinthe,int x, int y){
-    if (labyrinthe[x][y]==2){
-        return 0;
+int caseLibre(int** labyrinthe,int hauteur, int largeur, int x, int y){
+    if ((x>=0) && (y>=0) && (x<hauteur) && (y<largeur)){
+        if (labyrinthe[x][y]==2){
+            return 0;
+        }
+        else{
+            return 1;
+        }
     }
-    else{
-        return 1;
+    else {
+        return 0;
     }
 }
 
@@ -39,12 +44,12 @@ void emptyBuffer() {
 }
 
 Joueur haut(Joueur j){
-    (j->x)++;
+    (j->x)--;
     return j;
 }
 
 Joueur bas(Joueur j){
-    (j->x)--;
+    (j->x)++;
     return j;
 }
 
@@ -135,7 +140,7 @@ int deplacement(int** labyrinthe,Joueur j){
 
     while (pastermine){
         printf("\x1b[2J\x1b[H");
-        afficherLabyrinthe(labyrinthe,3,7,j);
+        afficherLabyrinthe(labyrinthe,11,11,j);
         afficherVie(j); 
         // ZQSD
         c =getchar();
@@ -148,7 +153,7 @@ int deplacement(int** labyrinthe,Joueur j){
                     int b=j->y;
                     switch(c){
                         case 'A':
-                            if (caseLibre(labyrinthe,a-1,b)){
+                            if (caseLibre(labyrinthe,11,11,a-1,b)){
                                 haut(j);
                             }
                             else{
@@ -156,7 +161,7 @@ int deplacement(int** labyrinthe,Joueur j){
                             }
                             break;
                         case 'B':
-                            if (caseLibre(labyrinthe,a+1,b)){
+                            if (caseLibre(labyrinthe,11,11,a+1,b)){
                                 bas(j);
                             }
                             else{
@@ -164,7 +169,7 @@ int deplacement(int** labyrinthe,Joueur j){
                             }
                             break;
                         case 'C':
-                            if (caseLibre(labyrinthe,a,b+1)){
+                            if (caseLibre(labyrinthe,11,11,a,b+1)){
                                 droite(j);
                             }
                             else{
@@ -172,7 +177,7 @@ int deplacement(int** labyrinthe,Joueur j){
                             }
                             break;
                         case 'D':
-                            if (caseLibre(labyrinthe,a,b-1)){
+                            if (caseLibre(labyrinthe,11,11,a,b-1)){
                                 gauche(j);
                             }
                             else{
@@ -198,7 +203,7 @@ int deplacement(int** labyrinthe,Joueur j){
         if (victoire(labyrinthe,j)){
             printf("\x1b[2J\x1b[H");
             pastermine=0;
-            afficherLabyrinthe(labyrinthe,3,7,j);
+            afficherLabyrinthe(labyrinthe,11,11,j);
             printf("Win");
         }
     }

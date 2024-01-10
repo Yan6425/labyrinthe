@@ -11,10 +11,10 @@ int main(){
     j=malloc(1*sizeof(Joueur));
     j=creerJoueur(j);
     int** labyrinthe;
-    labyrinthe=allouerLabyrinthe(3,7);
-    initialiserLabyrinthe(labyrinthe,3,7);
+    labyrinthe=allouerLabyrinthe(11,11);
+    initialiserLabyrinthe(labyrinthe,11,11);
     lireTXT(labyrinthe);
-    afficherLabyrinthe(labyrinthe,3,7,j);
+    afficherLabyrinthe(labyrinthe,11,11,j);
     deplacement(labyrinthe,j);
     return 0;
     return 0;

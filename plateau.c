@@ -35,7 +35,7 @@ void lireTXT(int** labyrinthe){
     int i=0;
     int j=0;
     laLigne=malloc(sizeof(char)*n);
-    lab = fopen("lab/lab1.txt", "r");
+    lab = fopen("lab/lab6.txt", "r");
     if (lab == NULL) {
         printf("Erreur ouverture fichier \n");
     }
