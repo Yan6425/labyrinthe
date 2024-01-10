@@ -190,7 +190,7 @@ int deplacement(int** labyrinthe,Joueur j){
             default:
                 break;
         }
-        // actionCase(labyrinthe,j);
+        actionCase(labyrinthe,j);
         if (estMort(j)){
             pastermine=0;
             printf("\n\rTu es mort !");
