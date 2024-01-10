@@ -19,7 +19,7 @@ int estMort(Joueur j);
 int valeurCase(int** labyrinthe,Joueur j);
 void retirerPotion(int** labyrinthe, Joueur j);
 void actionCase(int** labyrinthe,Joueur j);
-int deplacement(int** labyrinthe,Joueur j);
+int deplacement(int** labyrinthe,Joueur j,int hauteur, int largeur);
 
 
 // affichage.c
@@ -28,9 +28,10 @@ void afficherVie(Joueur j);
 
 
 // plateau.c
+void dimensionsLab(const char* nomFichier,int* hauteur,int* largeur);
 int** allouerLabyrinthe(int n, int N);
 void initialiserLabyrinthe(int** labyrinthe, int n, int N);
-void lireTXT(int** labyrinthe);
+void lireTXT(const char* nomFichier,int** labyrinthe);
 
 
 #endif
