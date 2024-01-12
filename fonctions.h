@@ -28,6 +28,7 @@ void afficherVie(Joueur j);
 
 
 // plateau.c
+const char* labAleatoire();
 void dimensionsLab(const char* nomFichier,int* hauteur,int* largeur);
 int** allouerLabyrinthe(int n, int N);
 void initialiserLabyrinthe(int** labyrinthe, int n, int N);

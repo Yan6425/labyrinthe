@@ -5,6 +5,7 @@
 #include <stdlib.h>   // exit()
 #include <termios.h>
 #include <string.h>
+#include <time.h>
 
 
 
@@ -12,7 +13,7 @@ int main(){
     Joueur j;
     int hauteur;
     int largeur;
-    const char* nomFichier="lab/lab6.txt";
+    const char* nomFichier=labAleatoire();
     dimensionsLab(nomFichier,&hauteur,&largeur);
     printf("%d %d",hauteur,largeur);
     j=malloc(1*sizeof(Joueur));
