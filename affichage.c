@@ -6,6 +6,33 @@
 #include <termios.h>
 #include <string.h>
 
+void debut(){
+    printf("\x1b[2J\x1b[H");
+    printf("███████████████████████████\n");
+    printf("█                         █\n");
+    printf("█    Bienvenue dans le    █\n");
+    printf("█    Jeu du Labyrinthe    █\n");
+    printf("█                         █\n");
+    printf("███████████████████████████\n");
+    sleep(2);
+    printf("\x1b[2J\x1b[H");
+    printf("███████████████████████████████████████████████████\n");
+    printf("█                                                 █\n");
+    printf("█    Règles :                                     █\n");
+    printf("█    -trouver le $ dans chacun des labyrinthes    █\n");
+    printf("█    -10 labyrinthes à compléter                  █\n");
+    printf("█    -utiliser les flèches pour se déplacer       █\n");
+    printf("█                                                 █\n");
+    printf("███████████████████████████████████████████████████\n");
+    sleep(4);
+    printf("\x1b[2J\x1b[H");
+    printf("███████████████████████████████████████████████\n");
+    printf("█                                             █\n");
+    printf("█    Appuyez sur entrée pour lancer le jeu    █\n");
+    printf("█                                             █\n");
+    printf("███████████████████████████████████████████████\n");
+}
+
 void afficherLabyrinthe(int** labyrinthe,int hauteur, int largeur, Joueur joueur){
     printf("\n\r");
     for (int i=(joueur->x)-(joueur->vision);i<=(joueur->x)+(joueur->vision);i++){
@@ -26,7 +53,7 @@ void afficherLabyrinthe(int** labyrinthe,int hauteur, int largeur, Joueur joueur
                 printf("v");
             }
             else if (labyrinthe[i][j]==0){
-                printf("O");
+                printf("$");
             }
             else if (labyrinthe[i][j]==1){
                 printf(" ");

@@ -123,10 +123,6 @@ int deplacement(int** labyrinthe,Joueur j,int hauteur, int largeur){
     char c;
     int pastermine=1;//par défaut on le met à vrai
 
-    /* on est obligé d'appuyer sur la touche entrée */
-    c =getchar();
-    printf("on est obligé d'appuyer sur entrée : vous avez écrit %d \n", c);
-
     /* ON VIDE LE BUFFER*/
     emptyBuffer();
 
