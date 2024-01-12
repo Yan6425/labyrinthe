@@ -18,10 +18,10 @@ const char* labAleatoire(){
         "lab/lab7.txt",
         "lab/lab8.txt",
         "lab/lab9.txt",
-        "lab/lab10.txt"
+        "lab/lab10.txt",
     };
     srand(time(NULL));
-    return labyrinthe[rand()%6];
+    return labyrinthe[rand()%1];
 }
 
 void dimensionsLab(const char* nomFichier, int* hauteur, int* largeur){
