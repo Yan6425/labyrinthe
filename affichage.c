@@ -70,4 +70,7 @@ void afficherVie(Joueur j){
         printf("♥");
     }
     printf("\033[0m");
+    for (int i=j->vie;i<3;i++){
+        printf("♥");
+    }
 }
