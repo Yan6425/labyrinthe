@@ -193,14 +193,17 @@ int deplacement(int** labyrinthe,Joueur j,int hauteur, int largeur){
         }
         actionCase(labyrinthe,j);
         if (estMort(j)){
-            pastermine=0;
-            printf("\n\rTu es mort !");
+            printf("\x1b[2J\x1b[H");
+            afficherLabyrinthe(labyrinthe,hauteur,largeur,j);
+            afficherVie(j);
+            sleep(1);
+            j=creerJoueur(j);
         }
         if (victoire(labyrinthe,j)){
             printf("\x1b[2J\x1b[H");
             pastermine=0;
             afficherLabyrinthe(labyrinthe,hauteur,largeur,j);
-            printf("Win");
+            printf("Labyrinthe fini !");
         }
     }
 
