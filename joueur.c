@@ -10,21 +10,40 @@ Joueur creerJoueur(Joueur j){
     j->x=1;
     j->y=1;
     j->vie=3;
-    j->bouclier=0;
+    j->bouclier=3;
     j->vision=2;
     return j;
 }
 
-int caseLibre(int** labyrinthe,int hauteur, int largeur, int x, int y){
+int verifierBouclier(Joueur j){
+    if(j->bouclier>0){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
+int caseLibre(int** labyrinthe,int hauteur, int largeur, int x, int y,Joueur j){
     if ((x>=0) && (y>=0) && (x<hauteur) && (y<largeur)){
         if (labyrinthe[x][y]==2){
+            degat(j,1);
+            return 0;
+        }
+        else if(labyrinthe[x][y]==5){
+            if(verifierBouclier(j)){
+                j->bouclier=0;
+            }
+            else{
+                j->vie=0;
+            }
             return 0;
         }
         else{
             return 1;
         }
     }
-    else {
+    else{
         return 0;
     }
 }
@@ -64,7 +83,12 @@ Joueur gauche(Joueur j){
 }
 
 Joueur degat(Joueur j,int damage){
-    j->vie=(j->vie)-damage;
+    if(j->bouclier>0){
+        j->bouclier=0;
+    }
+    else{
+        j->vie=(j->vie)-damage;
+    }
     return j;
 }
 
@@ -84,7 +108,7 @@ Joueur bouclierMoins(Joueur j, int shield){
 }
 
 int estMort(Joueur j){
-    if (j->vie==0){
+    if (j->vie<=0){
         return 1;
     }
     else {
@@ -112,7 +136,20 @@ void actionCase(int** labyrinthe, Joueur j){
             break;
         case 3:
             j->vision=(j->vision)+2;
-            retirerPotion(labyrinthe,j);
+            retirerPotion(labyrinthe,j); 
+        case 6:
+            if(verifierBouclier(j)){
+                j->bouclier=0;
+            }
+            else{
+                j->vie=j->vie-1;
+            }
+            break;
+        case 7:
+            j->bouclier=j->bouclier+4;
+            break;
+        case 8:
+            
         case 1:
             break;
     }
@@ -149,35 +186,23 @@ int deplacement(int** labyrinthe,Joueur j,int hauteur, int largeur){
                     int b=j->y;
                     switch(c){
                         case 'A':
-                            if (caseLibre(labyrinthe,hauteur,largeur,a-1,b)){
+                            if (caseLibre(labyrinthe,hauteur,largeur,a-1,b,j)){
                                 haut(j);
-                            }
-                            else{
-                                degat(j,1);
                             }
                             break;
                         case 'B':
-                            if (caseLibre(labyrinthe,hauteur,largeur,a+1,b)){
+                            if (caseLibre(labyrinthe,hauteur,largeur,a+1,b,j)){
                                 bas(j);
-                            }
-                            else{
-                                degat(j,1);
                             }
                             break;
                         case 'C':
-                            if (caseLibre(labyrinthe,hauteur,largeur,a,b+1)){
+                            if (caseLibre(labyrinthe,hauteur,largeur,a,b+1,j)){
                                 droite(j);
-                            }
-                            else{
-                                degat(j,1);
                             }
                             break;
                         case 'D':
-                            if (caseLibre(labyrinthe,hauteur,largeur,a,b-1)){
+                            if (caseLibre(labyrinthe,hauteur,largeur,a,b-1,j)){
                                 gauche(j);
-                            }
-                            else{
-                                degat(j,1);
                             }
                             break;
                         default :
