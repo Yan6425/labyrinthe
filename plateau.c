@@ -21,7 +21,7 @@ const char* labAleatoire(){
         "lab/lab10.txt",
     };
     srand(time(NULL));
-    return labyrinthe[rand()%1];
+    return labyrinthe[rand()%7];
 }
 
 void dimensionsLab(const char* nomFichier, int* hauteur, int* largeur){

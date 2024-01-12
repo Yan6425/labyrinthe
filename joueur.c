@@ -136,7 +136,7 @@ int deplacement(int** labyrinthe,Joueur j,int hauteur, int largeur){
 
     while (pastermine){
         printf("\x1b[2J\x1b[H");
-        afficherLabyrinthe(labyrinthe,hauteur,11,j);
+        afficherLabyrinthe(labyrinthe,hauteur,largeur,j);
         afficherVie(j); 
         // ZQSD
         c =getchar();
