@@ -10,15 +10,15 @@
 const char* nomLab(int n){
     const char* labyrinthe[]={
         "lab/lab1.txt",
-        // "lab/lab2.txt",
-        // "lab/lab3.txt",
-        // "lab/lab4.txt",
-        // "lab/lab5.txt",
-        // "lab/lab6.txt",
-        // "lab/lab7.txt",
-        // "lab/lab8.txt",
-        // "lab/lab9.txt",
-        // "lab/lab10.txt",
+        "lab/lab2.txt",
+        "lab/lab3.txt",
+        "lab/lab4.txt",
+        "lab/lab5.txt",
+        "lab/lab6.txt",
+        "lab/lab7.txt",
+        "lab/lab8.txt",
+        "lab/lab9.txt",
+        "lab/lab10.txt"
     };
     srand(time(NULL));
     return labyrinthe[n];

@@ -13,7 +13,7 @@ int main(){
     Joueur j;
     int hauteur;
     int largeur;
-    // debut();
+    debut();
     for (int i=0;i<10;i++){
         const char* nomFichier=nomLab(i);
         dimensionsLab(nomFichier,&hauteur,&largeur);
