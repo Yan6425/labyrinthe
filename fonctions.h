@@ -23,6 +23,7 @@ int deplacement(int** labyrinthe,Joueur j,int hauteur, int largeur);
 
 
 // affichage.c
+void debut();
 void afficherLabyrinthe(int** labyrinthe,int a, int b, Joueur u);
 void afficherVie(Joueur j);
 
