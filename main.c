@@ -23,7 +23,7 @@ int main(){
         labyrinthe=allouerLabyrinthe(hauteur,largeur);
         initialiserLabyrinthe(labyrinthe,hauteur,largeur);
         lireTXT(nomFichier,labyrinthe);
-        deplacement(labyrinthe,j,hauteur,largeur);
+        deplacement(labyrinthe,i+1,j,hauteur,largeur);
     }
     printf("\nBravo vous avez réussi !\n");
     return 0;

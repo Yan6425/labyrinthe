@@ -20,13 +20,14 @@ int estMort(Joueur j);
 int valeurCase(int** labyrinthe,Joueur j);
 void retirerPotion(int** labyrinthe, Joueur j);
 void actionCase(int** labyrinthe,Joueur j);
-int deplacement(int** labyrinthe,Joueur j,int hauteur, int largeur);
+int deplacement(int** labyrinthe,int n,Joueur j,int hauteur, int largeur);
 
 
 // affichage.c
 void debut();
 void afficherLabyrinthe(int** labyrinthe,int a, int b, Joueur u);
 void afficherVie(Joueur j);
+void afficherNiveau(int n);
 
 
 // plateau.c

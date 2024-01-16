@@ -155,7 +155,7 @@ void actionCase(int** labyrinthe, Joueur j){
     }
 }
 
-int deplacement(int** labyrinthe,Joueur j,int hauteur, int largeur){
+int deplacement(int** labyrinthe,int n,Joueur j,int hauteur, int largeur){
     struct termios tty_opts_backup, tty_opts_raw;
     char c;
     int pastermine=1;//par défaut on le met à vrai
@@ -173,6 +173,7 @@ int deplacement(int** labyrinthe,Joueur j,int hauteur, int largeur){
 
     while (pastermine){
         printf("\x1b[2J\x1b[H");
+        afficherNiveau(n);
         afficherLabyrinthe(labyrinthe,hauteur,largeur,j);
         afficherVie(j); 
         // ZQSD
@@ -219,6 +220,7 @@ int deplacement(int** labyrinthe,Joueur j,int hauteur, int largeur){
         actionCase(labyrinthe,j);
         if (estMort(j)){
             printf("\x1b[2J\x1b[H");
+            afficherNiveau(n);
             afficherLabyrinthe(labyrinthe,hauteur,largeur,j);
             afficherVie(j);
             sleep(1);
@@ -227,8 +229,9 @@ int deplacement(int** labyrinthe,Joueur j,int hauteur, int largeur){
         if (victoire(labyrinthe,j)){
             printf("\x1b[2J\x1b[H");
             pastermine=0;
+            afficherNiveau(n);
             afficherLabyrinthe(labyrinthe,hauteur,largeur,j);
-            printf("Labyrinthe fini !");
+            printf("Labyrinthe fini ! Appuyez sur entrée pour continuer !");
         }
     }
 
