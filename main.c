@@ -24,7 +24,11 @@ int main(){
         labyrinthe=allouerLabyrinthe(hauteur,largeur);
         initialiserLabyrinthe(labyrinthe,hauteur,largeur);
         lireTXT(nomFichier,labyrinthe);
-        deplacement(labyrinthe,i+1,j,hauteur,largeur,&fin);
+        Arbre arbre = malloc(sizeof(Noeud));
+        creerArbre(arbre, labyrinthe, 1, 1, hauteur, largeur);
+        afficherArbre(arbre, hauteur, largeur);
+        j->arbre = arbre;
+        deplacement(arbre, labyrinthe,i+1,j,hauteur,largeur,&fin);
         if (fin==1){
             break;
         }

@@ -2,17 +2,6 @@
 #define __structure_H_
 
 
-// joueur.c
-typedef struct humain{
-    int x;
-    int y;
-    int vie;
-    int avion;
-    int vision;
-    int sens;
-}humain;
-typedef humain* Joueur;
-
 
 // affichage.c
 
@@ -29,6 +18,18 @@ typedef struct noeud{
     struct noeud* droite;
 } Noeud;
 typedef Noeud* Arbre;
+
+// joueur.c
+typedef struct humain{
+    Arbre arbre;
+    int x;
+    int y;
+    int vie;
+    int avion;
+    int vision;
+    int ivre;
+}humain;
+typedef humain* Joueur;
 
 
 #endif

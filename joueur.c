@@ -7,12 +7,13 @@
 #include <string.h>
 
 Joueur creerJoueur(Joueur j){
+    j->arbre = malloc(sizeof(Noeud));
     j->x=1;
     j->y=1;
     j->vie=3;
     j->avion=0;
     j->vision=2;
-    j->sens=1;
+    j->ivre=0;
     return j;
 }
 
@@ -25,17 +26,23 @@ int verifierAvion(Joueur j){
     }
 }
 
-int caseLibre(int** labyrinthe,int hauteur, int largeur, int x, int y,Joueur j){
-    if ((x>=0) && (y>=0) && (x<hauteur) && (y<largeur)){
-        if (labyrinthe[x][y]==2){
+int caseLibre(Joueur j, char* sens){
+    switch (sens[0]){
+        case 'g':
+            return j->arbre->gauche != NULL;
+            break;
+        case 'd':
+            return j->arbre->droite != NULL;
+            break;
+        case 'h':
+            return j->arbre->haut != NULL;
+            break;
+        case 'b':
+            return j->arbre->bas != NULL;
+            break;
+        default:
             return 0;
-        }
-        else{
-            return 1;
-        }
-    }
-    else{
-        return 0;
+            break;
     }
 }
 
@@ -54,22 +61,34 @@ void emptyBuffer() {
 }
 
 Joueur haut(Joueur j){
-    (j->x)--;
+    if (j->arbre->haut != NULL){
+        j->arbre = j->arbre->haut;
+        j->y--;
+    }
     return j;
 }
 
 Joueur bas(Joueur j){
-    (j->x)++;
+    if (j->arbre->bas != NULL){
+        j->arbre = j->arbre->bas;
+        j->y++;
+    }
     return j;
 }
 
 Joueur droite(Joueur j){
-    (j->y)++;
+    if (j->arbre->droite != NULL){
+        j->arbre = j->arbre->droite;
+        j->x++;
+    }
     return j;
 }
 
 Joueur gauche(Joueur j){
-    (j->y)--;
+    if (j->arbre->gauche != NULL){
+        j->arbre = j->arbre->gauche;
+        j->x--;
+    }
     return j;
 }
 
@@ -142,7 +161,7 @@ void actionCase(int** labyrinthe, Joueur j){
             retirerPotion(labyrinthe,j);
             break;
         case 8:
-            j->sens=0;
+            j->ivre=1;
             retirerPotion(labyrinthe,j);
             break;
         default : 
@@ -150,7 +169,7 @@ void actionCase(int** labyrinthe, Joueur j){
     }
 }
 
-int deplacement(int** labyrinthe,int n,Joueur j,int hauteur, int largeur,int* fin){
+int deplacement(Arbre arbre, int** labyrinthe,int n,Joueur j,int hauteur, int largeur,int* fin){
     struct termios tty_opts_backup, tty_opts_raw;
     char c;
     int pastermine=1;//par défaut on le met à vrai
@@ -178,46 +197,44 @@ int deplacement(int** labyrinthe,int n,Joueur j,int hauteur, int largeur,int* fi
                 c=getchar();
                 if (c=='['){
                     c=getchar();
-                    int a=j->x;
-                    int b=j->y;
                     switch(c){
                         case 'A':
-                            if(j->sens==0){
-                                if(caseLibre(labyrinthe,hauteur,largeur,a+1,b,j)){
+                            if(j->ivre){
+                                if(caseLibre(j, "bas")){
                                     bas(j);
                                 }
                             }
-                            else if(caseLibre(labyrinthe,hauteur,largeur,a-1,b,j)){
+                            else if(caseLibre(j, "haut")){
                                 haut(j);
                             }
                             break;
                         case 'B':
-                            if(j->sens==0){
-                                if (caseLibre(labyrinthe,hauteur,largeur,a-1,b,j)){
+                            if(j->ivre){
+                                if (caseLibre(j, "haut")){
                                     haut(j);
                                 } 
                             }
-                            else if(caseLibre(labyrinthe,hauteur,largeur,a+1,b,j)){
+                            else if(caseLibre(j, "bas")){
                                 bas(j);
                             }
                             break;
                         case 'C':
-                            if(j->sens==0){
-                               if (caseLibre(labyrinthe,hauteur,largeur,a,b-1,j)){
+                            if(j->ivre){
+                               if (caseLibre(j, "gauche")){
                                     gauche(j);
                                 } 
                             }
-                            else if (caseLibre(labyrinthe,hauteur,largeur,a,b+1,j)){
+                            else if (caseLibre(j, "droite")){
                                 droite(j);
                             }
                             break;
                         case 'D':
-                            if(j->sens==0){
-                               if (caseLibre(labyrinthe,hauteur,largeur,a,b+1,j)){
+                            if(j->ivre){
+                               if (caseLibre(j,"droite")){
                                     droite(j);
                                 } 
                             }
-                            else if (caseLibre(labyrinthe,hauteur,largeur,a,b-1,j)){
+                            else if (caseLibre(j, "gauche")){
                                 gauche(j);
                             }
                             break;

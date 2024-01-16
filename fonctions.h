@@ -5,7 +5,7 @@
 // joueur.c
 Joueur creerJoueur(Joueur j);
 int verifierAvion(Joueur j);
-int caseLibre(int** labyrinthe,int hauteur, int largeur, int x, int y,Joueur j);
+int caseLibre(Joueur j, char* sens);
 int victoire(int** labyrinthe,Joueur j);
 void emptyBuffer();
 Joueur haut(Joueur j);
@@ -20,7 +20,7 @@ int estMort(Joueur j);
 int valeurCase(int** labyrinthe,Joueur j);
 void retirerPotion(int** labyrinthe, Joueur j);
 void actionCase(int** labyrinthe,Joueur j);
-int deplacement(int** labyrinthe,int n,Joueur j,int hauteur, int largeur,int* fin);
+int deplacement(Arbre arbre, int** labyrinthe,int n,Joueur j,int hauteur, int largeur,int* fin);
 
 
 // affichage.c
@@ -38,8 +38,10 @@ void initialiserLabyrinthe(int** labyrinthe, int n, int N);
 void lireTXT(const char* nomFichier, int** labyrinthe);
 void creerArbre(Arbre arbre, int** labyrinthe, int x, int y, int hauteur, int largeur);
 void initDejaVus(int** dejaVus, int hauteur, int largeur);
-Arbre trouverNoeud(Arbre arbre, int x, int y, int** dejaVus, int hauteur, int largeur);
-void afficherArbre(Arbre arbre, int** dejaVus);
+Arbre trouverNoeud(Arbre arbre, int x, int y, int hauteur, int largeur);
+Arbre trouverNoeudCache(Arbre arbre, int x, int y, int** dejaVus, int hauteur, int largeur);
+void afficherArbre(Arbre arbre, int hauteur, int largeur);
+void afficherArbreCache(Arbre arbre, int** dejaVus);
 
 
 #endif
