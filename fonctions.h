@@ -38,4 +38,7 @@ void initialiserLabyrinthe(int** labyrinthe, int n, int N);
 void lireTXT(const char* nomFichier,int** labyrinthe);
 
 
+// menu.c
+int deplacementMenu();
+
 #endif
