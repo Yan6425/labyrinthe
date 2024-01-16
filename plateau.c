@@ -20,7 +20,6 @@ const char* nomLab(int n){
         "lab/lab9.txt",
         "lab/lab10.txt"
     };
-    srand(time(NULL));
     return labyrinthe[n];
 }
 
