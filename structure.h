@@ -7,7 +7,7 @@ typedef struct humain{
     int x;
     int y;
     int vie;
-    int bouclier;
+    int avion;
     int vision;
     int sens;
 }humain;

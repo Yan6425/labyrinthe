@@ -10,14 +10,14 @@ Joueur creerJoueur(Joueur j){
     j->x=1;
     j->y=1;
     j->vie=3;
-    j->bouclier=0;
+    j->avion=0;
     j->vision=2;
     j->sens=1;
     return j;
 }
 
-int verifierBouclier(Joueur j){
-    if(j->bouclier>0){
+int verifierAvion(Joueur j){
+    if(j->avion>0){
         return 1;
     }
     else{
@@ -28,15 +28,6 @@ int verifierBouclier(Joueur j){
 int caseLibre(int** labyrinthe,int hauteur, int largeur, int x, int y,Joueur j){
     if ((x>=0) && (y>=0) && (x<hauteur) && (y<largeur)){
         if (labyrinthe[x][y]==2){
-            return 0;
-        }
-        else if(labyrinthe[x][y]==5){
-            if(verifierBouclier(j)){
-                j->bouclier=0;
-            }
-            else{
-                j->vie=0;
-            }
             return 0;
         }
         else{
@@ -83,8 +74,8 @@ Joueur gauche(Joueur j){
 }
 
 Joueur degat(Joueur j,int damage){
-    if(j->bouclier>0){
-        j->bouclier=0;
+    if(j->avion>0){
+        j->avion=0;
     }
     else{
         j->vie=(j->vie)-damage;
@@ -97,13 +88,13 @@ Joueur soin(Joueur j, int heal){
     return j;
 }
 
-Joueur bouclierPlus(Joueur j, int shield){
-    j->bouclier=(j->bouclier)+shield;
+Joueur avionPlus(Joueur j, int shield){
+    j->avion=(j->avion)+shield;
     return j;
 }
 
-Joueur bouclierMoins(Joueur j, int shield){
-    j->bouclier=(j->bouclier)-shield;
+Joueur avionMoins(Joueur j, int shield){
+    j->avion=(j->avion)-shield;
     return j;
 }
 
@@ -139,15 +130,16 @@ void actionCase(int** labyrinthe, Joueur j){
             }            
             break;
         case 6:
-            if(verifierBouclier(j)){
-                j->bouclier=0;
+            if(verifierAvion(j)){
+                j->avion=0;
             }
             else{
                 j->vie=j->vie-1;
             }
             break;
         case 7:
-            j->bouclier=j->bouclier+4;
+            avionPlus(j,1);
+            retirerPotion(labyrinthe,j);
             break;
         case 8:
             j->sens=0;

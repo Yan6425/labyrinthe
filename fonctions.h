@@ -4,7 +4,7 @@
 
 // joueur.c
 Joueur creerJoueur(Joueur j);
-int verifierBouclier(Joueur j);
+int verifierAvion(Joueur j);
 int caseLibre(int** labyrinthe,int hauteur, int largeur, int x, int y,Joueur j);
 int victoire(int** labyrinthe,Joueur j);
 void emptyBuffer();
@@ -14,8 +14,8 @@ Joueur droite(Joueur j);
 Joueur gauche(Joueur j);
 Joueur degat(Joueur j,int damage);
 Joueur soin(Joueur j, int heal);
-Joueur bouclierPlus(Joueur j, int shield);
-Joueur bouclierMoins(Joueur j, int shield);
+Joueur avionPlus(Joueur j, int shield);
+Joueur avionMoins(Joueur j, int shield);
 int estMort(Joueur j);
 int valeurCase(int** labyrinthe,Joueur j);
 void retirerPotion(int** labyrinthe, Joueur j);
