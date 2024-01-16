@@ -127,16 +127,17 @@ void retirerPotion(int** labyrinthe, Joueur j){
 void actionCase(int** labyrinthe, Joueur j){
     int cellule=valeurCase(labyrinthe,j);
     switch(cellule){
-        case 4: 
-            if(j->vie < 3){
-                j->vie=(j->vie)+1;
-                retirerPotion(labyrinthe,j);
-            }
-            
+        case 1:
             break;
         case 3:
             j->vision=(j->vision)+2;
             retirerPotion(labyrinthe,j); 
+        case 4:
+            if(j->vie < 3){
+                j->vie=(j->vie)+1;
+                retirerPotion(labyrinthe,j);
+            }            
+            break;
         case 6:
             if(verifierBouclier(j)){
                 j->bouclier=0;
@@ -150,8 +151,7 @@ void actionCase(int** labyrinthe, Joueur j){
             break;
         case 8:
             j->sens=0;
-            break;
-        case 1:
+            retirerPotion(labyrinthe,j);
             break;
         default : 
             break;
