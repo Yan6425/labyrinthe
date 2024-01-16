@@ -30,15 +30,6 @@ int caseLibre(int** labyrinthe,int hauteur, int largeur, int x, int y,Joueur j){
         if (labyrinthe[x][y]==2){
             return 0;
         }
-        else if(labyrinthe[x][y]==5){
-            if(verifierBouclier(j)){
-                j->bouclier=0;
-            }
-            else{
-                j->vie=0;
-            }
-            return 0;
-        }
         else{
             return 1;
         }
