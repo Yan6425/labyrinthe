@@ -13,7 +13,7 @@ int main(){
     Joueur j;
     int hauteur;
     int largeur;
-    const char* nomFichier="lab/lab1.txt";
+    const char* nomFichier=labAleatoire();
     dimensionsLab(nomFichier,&hauteur,&largeur);
     printf("%d %d",hauteur,largeur);
     j=malloc(1*sizeof(Joueur));
@@ -23,10 +23,6 @@ int main(){
     initialiserLabyrinthe(labyrinthe,hauteur,largeur);
     lireTXT(nomFichier,labyrinthe);
     afficherLabyrinthe(labyrinthe,hauteur,largeur,j);
-    int** dejaVus = initDejaVus(hauteur, largeur);
-    Arbre arbre = malloc(sizeof(Noeud));
-    creerArbre(arbre, labyrinthe, 1, 1, hauteur, largeur);
-    afficherArbre(arbre, initDejaVus(hauteur, largeur));
-    
+    deplacement(labyrinthe,j,hauteur,largeur);
     return 0;
 }
