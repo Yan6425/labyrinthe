@@ -28,7 +28,6 @@ int verifierAvion(Joueur j){
 int caseLibre(int** labyrinthe,int hauteur, int largeur, int x, int y,Joueur j){
     if ((x>=0) && (y>=0) && (x<hauteur) && (y<largeur)){
         if (labyrinthe[x][y]==2){
-            degat(j,1);
             return 0;
         }
         else if(labyrinthe[x][y]==5){
@@ -154,6 +153,8 @@ void actionCase(int** labyrinthe, Joueur j){
         case 8:
             j->sens=0;
             retirerPotion(labyrinthe,j);
+            break;
+        default : 
             break;
         default : 
             break;
