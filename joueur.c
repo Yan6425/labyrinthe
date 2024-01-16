@@ -129,13 +129,13 @@ void actionCase(int** labyrinthe, Joueur j){
                 retirerPotion(labyrinthe,j);
             }            
             break;
+        case 5:
+            if (!verifierAvion(j)){
+                j->vie=0;
+            }
+            break;
         case 6:
-            if(verifierAvion(j)){
-                j->avion=0;
-            }
-            else{
-                j->vie=j->vie-1;
-            }
+            j->vie=j->vie-1;
             break;
         case 7:
             avionPlus(j,1);
