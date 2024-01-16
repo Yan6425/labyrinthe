@@ -35,7 +35,11 @@ const char* nomLab(int n);
 void dimensionsLab(const char* nomFichier,int* hauteur,int* largeur);
 int** allouerLabyrinthe(int n, int N);
 void initialiserLabyrinthe(int** labyrinthe, int n, int N);
-void lireTXT(const char* nomFichier,int** labyrinthe);
+void lireTXT(const char* nomFichier, int** labyrinthe);
+void creerArbre(Arbre arbre, int** labyrinthe, int x, int y, int hauteur, int largeur);
+void initDejaVus(int** dejaVus, int hauteur, int largeur);
+Arbre trouverNoeud(Arbre arbre, int x, int y, int** dejaVus, int hauteur, int largeur);
+void afficherArbre(Arbre arbre, int** dejaVus);
 
 
 #endif
