@@ -121,7 +121,7 @@ void actionCase(int** labyrinthe, Joueur j){
         case 1:
             break;
         case 3:
-            j->vision=(j->vision)+2;
+            j->vision=(j->vision)+1;
             retirerPotion(labyrinthe,j); 
         case 4:
             if(j->vie < 3){
@@ -150,7 +150,7 @@ void actionCase(int** labyrinthe, Joueur j){
     }
 }
 
-int deplacement(int** labyrinthe,int n,Joueur j,int hauteur, int largeur){
+int deplacement(int** labyrinthe,int n,Joueur j,int hauteur, int largeur,int* fin){
     struct termios tty_opts_backup, tty_opts_raw;
     char c;
     int pastermine=1;//par défaut on le met à vrai
@@ -228,6 +228,7 @@ int deplacement(int** labyrinthe,int n,Joueur j,int hauteur, int largeur){
                 break;
             case 97:
                 pastermine=0;
+                *fin=1;
                 break;
             default:
                 break;
@@ -238,8 +239,15 @@ int deplacement(int** labyrinthe,int n,Joueur j,int hauteur, int largeur){
             afficherNiveau(n);
             afficherLabyrinthe(labyrinthe,hauteur,largeur,j);
             afficherVie(j);
+            if (labyrinthe[j->x][j->y]==5){
+                printf("\n\rVous êtes mort ! Pour réessayer appuyer sur entrée !");
+            }
+            else {
+                printf("\n\rVous vous êtes endormi ! Pour réessayer appuyer sur entrée !");
+            }            
             sleep(1);
-            j=creerJoueur(j);
+            pastermine=0;
+            *fin=2;
         }
         if (victoire(labyrinthe,j)){
             printf("\x1b[2J\x1b[H");

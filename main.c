@@ -13,6 +13,7 @@ int main(){
     Joueur j;
     int hauteur;
     int largeur;
+    int fin=0;
     debut();
     for (int i=0;i<10;i++){
         const char* nomFichier=nomLab(i);
@@ -23,8 +24,17 @@ int main(){
         labyrinthe=allouerLabyrinthe(hauteur,largeur);
         initialiserLabyrinthe(labyrinthe,hauteur,largeur);
         lireTXT(nomFichier,labyrinthe);
-        deplacement(labyrinthe,i+1,j,hauteur,largeur);
+        deplacement(labyrinthe,i+1,j,hauteur,largeur,&fin);
+        if (fin==1){
+            break;
+        }
+        else if (fin==2){
+            i--;
+        }
+        fin=0;
     }
-    printf("\nBravo vous avez réussi !\n");
+    if (!fin){
+        printf("\nBravo vous avez réussi !\n");
+    }
     return 0;
 }
