@@ -3,7 +3,7 @@
 
 
 // joueur.c
-Joueur creerJoueur(Joueur j);
+Joueur creerJoueur(Joueur j,int difficulte);
 int verifierAvion(Joueur j);
 int caseLibre(int** labyrinthe,int hauteur, int largeur, int x, int y,Joueur j);
 int victoire(int** labyrinthe,Joueur j);
@@ -39,6 +39,12 @@ void lireTXT(const char* nomFichier,int** labyrinthe);
 
 
 // menu.c
-int deplacementMenu();
+void hautMenu(int* positionMenu);
+void basMenu(int* positionMenu);
+void afficherMenu(int positionMenu);
+void afficherRegles();
+void afficherDifficulte(int positionMenu);
+void entreeMenu(int* positionMenu,int* start,int* difficulte);
+int deplacementMenu(int* fin);
 
 #endif
