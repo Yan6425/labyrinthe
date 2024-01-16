@@ -10,12 +10,22 @@ Joueur creerJoueur(Joueur j){
     j->x=1;
     j->y=1;
     j->vie=3;
-    j->bouclier=0;
+    j->avion=0;
     j->vision=2;
+    j->sens=1;
     return j;
 }
 
-int caseLibre(int** labyrinthe,int hauteur, int largeur, int x, int y){
+int verifierAvion(Joueur j){
+    if(j->avion>0){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
+int caseLibre(int** labyrinthe,int hauteur, int largeur, int x, int y,Joueur j){
     if ((x>=0) && (y>=0) && (x<hauteur) && (y<largeur)){
         if (labyrinthe[x][y]==2){
             return 0;
@@ -24,7 +34,7 @@ int caseLibre(int** labyrinthe,int hauteur, int largeur, int x, int y){
             return 1;
         }
     }
-    else {
+    else{
         return 0;
     }
 }
@@ -64,7 +74,12 @@ Joueur gauche(Joueur j){
 }
 
 Joueur degat(Joueur j,int damage){
-    j->vie=(j->vie)-damage;
+    if(j->avion>0){
+        j->avion=0;
+    }
+    else{
+        j->vie=(j->vie)-damage;
+    }
     return j;
 }
 
@@ -73,18 +88,18 @@ Joueur soin(Joueur j, int heal){
     return j;
 }
 
-Joueur bouclierPlus(Joueur j, int shield){
-    j->bouclier=(j->bouclier)+shield;
+Joueur avionPlus(Joueur j, int shield){
+    j->avion=(j->avion)+shield;
     return j;
 }
 
-Joueur bouclierMoins(Joueur j, int shield){
-    j->bouclier=(j->bouclier)-shield;
+Joueur avionMoins(Joueur j, int shield){
+    j->avion=(j->avion)-shield;
     return j;
 }
 
 int estMort(Joueur j){
-    if (j->vie==0){
+    if (j->vie<=0){
         return 1;
     }
     else {
@@ -103,29 +118,42 @@ void retirerPotion(int** labyrinthe, Joueur j){
 void actionCase(int** labyrinthe, Joueur j){
     int cellule=valeurCase(labyrinthe,j);
     switch(cellule){
-        case 4: 
+        case 1:
+            break;
+        case 3:
+            j->vision=(j->vision)+1;
+            retirerPotion(labyrinthe,j); 
+        case 4:
             if(j->vie < 3){
                 j->vie=(j->vie)+1;
                 retirerPotion(labyrinthe,j);
-            }
-            
+            }            
             break;
-        case 3:
-            j->vision=(j->vision)+2;
+        case 5:
+            if (!verifierAvion(j)){
+                j->vie=0;
+            }
+            break;
+        case 6:
+            j->vie=j->vie-1;
+            break;
+        case 7:
+            avionPlus(j,1);
             retirerPotion(labyrinthe,j);
-        case 1:
+            break;
+        case 8:
+            j->sens=0;
+            retirerPotion(labyrinthe,j);
+            break;
+        default : 
             break;
     }
 }
 
-int deplacement(int** labyrinthe,Joueur j,int hauteur, int largeur){
+int deplacement(int** labyrinthe,int n,Joueur j,int hauteur, int largeur,int* fin){
     struct termios tty_opts_backup, tty_opts_raw;
     char c;
     int pastermine=1;//par défaut on le met à vrai
-
-    /* on est obligé d'appuyer sur la touche entrée */
-    c =getchar();
-    printf("on est obligé d'appuyer sur entrée : vous avez écrit %d \n", c);
 
     /* ON VIDE LE BUFFER*/
     emptyBuffer();
@@ -140,7 +168,8 @@ int deplacement(int** labyrinthe,Joueur j,int hauteur, int largeur){
 
     while (pastermine){
         printf("\x1b[2J\x1b[H");
-        afficherLabyrinthe(labyrinthe,hauteur,11,j);
+        afficherNiveau(n);
+        afficherLabyrinthe(labyrinthe,hauteur,largeur,j);
         afficherVie(j); 
         // ZQSD
         c =getchar();
@@ -153,35 +182,43 @@ int deplacement(int** labyrinthe,Joueur j,int hauteur, int largeur){
                     int b=j->y;
                     switch(c){
                         case 'A':
-                            if (caseLibre(labyrinthe,hauteur,largeur,a-1,b)){
-                                haut(j);
+                            if(j->sens==0){
+                                if(caseLibre(labyrinthe,hauteur,largeur,a+1,b,j)){
+                                    bas(j);
+                                }
                             }
-                            else{
-                                degat(j,1);
+                            else if(caseLibre(labyrinthe,hauteur,largeur,a-1,b,j)){
+                                haut(j);
                             }
                             break;
                         case 'B':
-                            if (caseLibre(labyrinthe,hauteur,largeur,a+1,b)){
-                                bas(j);
+                            if(j->sens==0){
+                                if (caseLibre(labyrinthe,hauteur,largeur,a-1,b,j)){
+                                    haut(j);
+                                } 
                             }
-                            else{
-                                degat(j,1);
+                            else if(caseLibre(labyrinthe,hauteur,largeur,a+1,b,j)){
+                                bas(j);
                             }
                             break;
                         case 'C':
-                            if (caseLibre(labyrinthe,hauteur,largeur,a,b+1)){
-                                droite(j);
+                            if(j->sens==0){
+                               if (caseLibre(labyrinthe,hauteur,largeur,a,b-1,j)){
+                                    gauche(j);
+                                } 
                             }
-                            else{
-                                degat(j,1);
+                            else if (caseLibre(labyrinthe,hauteur,largeur,a,b+1,j)){
+                                droite(j);
                             }
                             break;
                         case 'D':
-                            if (caseLibre(labyrinthe,hauteur,largeur,a,b-1)){
-                                gauche(j);
+                            if(j->sens==0){
+                               if (caseLibre(labyrinthe,hauteur,largeur,a,b+1,j)){
+                                    droite(j);
+                                } 
                             }
-                            else{
-                                degat(j,1);
+                            else if (caseLibre(labyrinthe,hauteur,largeur,a,b-1,j)){
+                                gauche(j);
                             }
                             break;
                         default :
@@ -191,20 +228,33 @@ int deplacement(int** labyrinthe,Joueur j,int hauteur, int largeur){
                 break;
             case 97:
                 pastermine=0;
+                *fin=1;
                 break;
             default:
                 break;
         }
         actionCase(labyrinthe,j);
         if (estMort(j)){
+            printf("\x1b[2J\x1b[H");
+            afficherNiveau(n);
+            afficherLabyrinthe(labyrinthe,hauteur,largeur,j);
+            afficherVie(j);
+            if (labyrinthe[j->x][j->y]==5){
+                printf("\n\rVous êtes mort ! Pour réessayer appuyer sur entrée !");
+            }
+            else {
+                printf("\n\rVous vous êtes endormi ! Pour réessayer appuyer sur entrée !");
+            }            
+            sleep(1);
             pastermine=0;
-            printf("\n\rTu es mort !");
+            *fin=2;
         }
         if (victoire(labyrinthe,j)){
             printf("\x1b[2J\x1b[H");
             pastermine=0;
+            afficherNiveau(n);
             afficherLabyrinthe(labyrinthe,hauteur,largeur,j);
-            printf("Win");
+            printf("Labyrinthe fini ! Appuyez sur entrée pour continuer !");
         }
     }
 

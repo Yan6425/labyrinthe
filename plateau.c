@@ -7,7 +7,7 @@
 #include <string.h>
 #include <time.h>
 
-const char* labAleatoire(){
+const char* nomLab(int n){
     const char* labyrinthe[]={
         "lab/lab1.txt",
         "lab/lab2.txt",
@@ -20,8 +20,7 @@ const char* labAleatoire(){
         "lab/lab9.txt",
         "lab/lab10.txt"
     };
-    srand(time(NULL));
-    return labyrinthe[rand()%6];
+    return labyrinthe[n];
 }
 
 void dimensionsLab(const char* nomFichier, int* hauteur, int* largeur){
