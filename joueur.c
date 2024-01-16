@@ -10,8 +10,9 @@ Joueur creerJoueur(Joueur j){
     j->x=1;
     j->y=1;
     j->vie=3;
-    j->bouclier=3;
+    j->bouclier=0;
     j->vision=2;
+    j->sens=1;
     return j;
 }
 
@@ -27,7 +28,6 @@ int verifierBouclier(Joueur j){
 int caseLibre(int** labyrinthe,int hauteur, int largeur, int x, int y,Joueur j){
     if ((x>=0) && (y>=0) && (x<hauteur) && (y<largeur)){
         if (labyrinthe[x][y]==2){
-            degat(j,1);
             return 0;
         }
         else if(labyrinthe[x][y]==5){
@@ -149,8 +149,11 @@ void actionCase(int** labyrinthe, Joueur j){
             j->bouclier=j->bouclier+4;
             break;
         case 8:
-            
+            j->sens=0;
+            break;
         case 1:
+            break;
+        default : 
             break;
     }
 }
@@ -186,22 +189,42 @@ int deplacement(int** labyrinthe,Joueur j,int hauteur, int largeur){
                     int b=j->y;
                     switch(c){
                         case 'A':
-                            if (caseLibre(labyrinthe,hauteur,largeur,a-1,b,j)){
+                            if(j->sens==0){
+                                if(caseLibre(labyrinthe,hauteur,largeur,a+1,b,j)){
+                                    bas(j);
+                                }
+                            }
+                            else if(caseLibre(labyrinthe,hauteur,largeur,a-1,b,j)){
                                 haut(j);
                             }
                             break;
                         case 'B':
-                            if (caseLibre(labyrinthe,hauteur,largeur,a+1,b,j)){
+                            if(j->sens==0){
+                                if (caseLibre(labyrinthe,hauteur,largeur,a-1,b,j)){
+                                    haut(j);
+                                } 
+                            }
+                            else if(caseLibre(labyrinthe,hauteur,largeur,a+1,b,j)){
                                 bas(j);
                             }
                             break;
                         case 'C':
-                            if (caseLibre(labyrinthe,hauteur,largeur,a,b+1,j)){
+                            if(j->sens==0){
+                               if (caseLibre(labyrinthe,hauteur,largeur,a,b-1,j)){
+                                    gauche(j);
+                                } 
+                            }
+                            else if (caseLibre(labyrinthe,hauteur,largeur,a,b+1,j)){
                                 droite(j);
                             }
                             break;
                         case 'D':
-                            if (caseLibre(labyrinthe,hauteur,largeur,a,b-1,j)){
+                            if(j->sens==0){
+                               if (caseLibre(labyrinthe,hauteur,largeur,a,b+1,j)){
+                                    droite(j);
+                                } 
+                            }
+                            else if (caseLibre(labyrinthe,hauteur,largeur,a,b-1,j)){
                                 gauche(j);
                             }
                             break;

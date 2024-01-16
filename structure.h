@@ -9,6 +9,7 @@ typedef struct humain{
     int vie;
     int bouclier;
     int vision;
+    int sens;
 }humain;
 typedef humain* Joueur;
 
