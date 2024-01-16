@@ -17,6 +17,17 @@ typedef humain* Joueur;
 
 
 // plateau.c
+typedef struct noeud{
+    int x;
+    int y;
+    int valeur;
+    int distance;
+    struct noeud* haut;
+    struct noeud* bas;
+    struct noeud* gauche;
+    struct noeud* droite;
+} Noeud;
+typedef Noeud* Arbre;
 
 
 #endif

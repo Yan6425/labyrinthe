@@ -29,10 +29,14 @@ void afficherVie(Joueur j);
 
 // plateau.c
 const char* labAleatoire();
-void dimensionsLab(const char* nomFichier,int* hauteur,int* largeur);
+void dimensionsLab(const char* nomFichier, int* hauteur, int* largeur);
 int** allouerLabyrinthe(int n, int N);
 void initialiserLabyrinthe(int** labyrinthe, int n, int N);
-void lireTXT(const char* nomFichier,int** labyrinthe);
+void lireTXT(const char* nomFichier, int** labyrinthe);
+void creerArbre(Arbre arbre, int** labyrinthe, int x, int y, int hauteur, int largeur);
+int** initDejaVus(int hauteur, int largeur);
+Arbre trouverNoeud(Arbre arbre, int x, int y, int** dejaVus);
+void afficherArbre(Arbre arbre, int** dejaVus);
 
 
 #endif
