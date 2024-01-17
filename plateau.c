@@ -106,15 +106,23 @@ void lireTXT(const char* nomFichier,int** labyrinthe){
 
 
 void creerArbre(Arbre arbre, int** labyrinthe, int x, int y, int hauteur, int largeur){
+    Arbre** noeudsDejaVus = malloc(largeur * sizeof(Arbre*));
+    initNoeudsDejaVus(noeudsDejaVus, hauteur, largeur);
+    creerArbreCache(arbre, labyrinthe, x, y, hauteur, largeur, noeudsDejaVus);
+}
+
+
+void creerArbreCache(Arbre arbre, int** labyrinthe, int x, int y, int hauteur, int largeur, Arbre** noeudsDejaVus){
+    printf("appel x : %d, y : %d\n", x, y);
     arbre->x = x;
     arbre->y = y;
     arbre->valeur = labyrinthe[y][x];
-    int** dejaVus= malloc(largeur * sizeof(int*));
+    noeudsDejaVus[x][y] = arbre;
 
     if (x - 1 >= 0 && labyrinthe[y][x - 1] != 2) {
+        printf("gauche\n");
         if (arbre->gauche == NULL) {
-            initDejaVus(dejaVus, hauteur, largeur);
-            arbre->gauche = trouverNoeud(arbre, x - 1, y, dejaVus, hauteur, largeur);
+            arbre->gauche = noeudsDejaVus[x - 1][y];
             if (arbre->gauche != NULL) {
                 arbre->gauche->droite = arbre;
             }
@@ -122,13 +130,13 @@ void creerArbre(Arbre arbre, int** labyrinthe, int x, int y, int hauteur, int la
         if (arbre->gauche == NULL) {
             arbre->gauche = malloc(sizeof(Noeud));
             arbre->gauche->droite = arbre;
-            creerArbre(arbre->gauche, labyrinthe, x - 1, y, hauteur, largeur);
+            creerArbreCache(arbre->gauche, labyrinthe, x - 1, y, hauteur, largeur, noeudsDejaVus);
         }
     }
     if (x + 1 < largeur && labyrinthe[y][x + 1] != 2) {
+        printf("droite\n");
         if (arbre->droite == NULL) {
-            initDejaVus(dejaVus, hauteur, largeur);
-            arbre->droite = trouverNoeud(arbre, x + 1, y, dejaVus, hauteur, largeur);
+            arbre->droite = noeudsDejaVus[x + 1][y];
             if (arbre->droite != NULL) {
                 arbre->droite->gauche = arbre;
             }
@@ -136,13 +144,13 @@ void creerArbre(Arbre arbre, int** labyrinthe, int x, int y, int hauteur, int la
         if (arbre->droite == NULL) {
             arbre->droite = malloc(sizeof(Noeud));
             arbre->droite->gauche = arbre;
-            creerArbre(arbre->droite, labyrinthe, x + 1, y, hauteur, largeur);
+            creerArbreCache(arbre->droite, labyrinthe, x + 1, y, hauteur, largeur, noeudsDejaVus);
         }
     }
     if (y - 1 >= 0 && labyrinthe[y - 1][x] != 2) {
+        printf("haut\n");
         if (arbre->haut == NULL) {
-            initDejaVus(dejaVus, hauteur, largeur);
-            arbre->haut = trouverNoeud(arbre, x, y - 1, dejaVus, hauteur, largeur);
+            arbre->haut = noeudsDejaVus[x][y - 1];
             if (arbre->haut != NULL) {
                 arbre->haut->bas = arbre;
             }
@@ -150,13 +158,13 @@ void creerArbre(Arbre arbre, int** labyrinthe, int x, int y, int hauteur, int la
         if (arbre->haut == NULL) {
             arbre->haut = malloc(sizeof(Noeud));
             arbre->haut->bas = arbre;
-            creerArbre(arbre->haut, labyrinthe, x, y - 1, hauteur, largeur);
+            creerArbreCache(arbre->haut, labyrinthe, x, y - 1, hauteur, largeur, noeudsDejaVus);
         }
     }
     if (y + 1 < hauteur && labyrinthe[y + 1][x] != 2) {
+        printf("bas\n");
         if (arbre->bas == NULL) {
-            initDejaVus(dejaVus, hauteur, largeur);
-            arbre->bas = trouverNoeud(arbre, x, y + 1, dejaVus, hauteur, largeur);
+            arbre->bas = noeudsDejaVus[x][y + 1];
             if (arbre->bas != NULL) {
                 arbre->bas->haut = arbre;
             }
@@ -164,7 +172,17 @@ void creerArbre(Arbre arbre, int** labyrinthe, int x, int y, int hauteur, int la
         if (arbre->bas == NULL) {
             arbre->bas = malloc(sizeof(Noeud));
             arbre->bas->haut = arbre;
-            creerArbre(arbre->bas, labyrinthe, x, y + 1, hauteur, largeur);
+            creerArbreCache(arbre->bas, labyrinthe, x, y + 1, hauteur, largeur, noeudsDejaVus);
+        }
+    }
+}
+
+
+void initNoeudsDejaVus(Arbre** noeudsDejaVus, int hauteur, int largeur){
+    for (int i = 0; i < largeur; i++) {
+        noeudsDejaVus[i] = malloc(hauteur * sizeof(Arbre));
+        for (int j = 0; j < hauteur; j++) {
+            noeudsDejaVus[i][j] = NULL;
         }
     }
 }
@@ -177,32 +195,6 @@ void initDejaVus(int** dejaVus, int hauteur, int largeur){
             dejaVus[i][j] = 0;
         }
     }
-}
-
-
-Arbre trouverNoeud(Arbre arbre, int x, int y, int** dejaVus, int hauteur, int largeur){
-    if (arbre == NULL){
-        return NULL;
-    }
-    else if (arbre->x == x && arbre->y == y){
-        return arbre;
-    }
-    Arbre noeud = NULL;
-    dejaVus[arbre->x][arbre->y] = 1;
-  
-    if (arbre->x > 0 && !(dejaVus[arbre->x - 1][arbre->y])){
-        noeud = trouverNoeud(arbre->gauche, x, y, dejaVus, hauteur, largeur);
-    }
-    if (noeud == NULL && arbre->x + 1 < largeur && !(dejaVus[arbre->x + 1][arbre->y])){
-        noeud = trouverNoeud(arbre->droite, x, y, dejaVus, hauteur, largeur);
-    }
-    if (noeud == NULL && arbre->y > 0 && !(dejaVus[arbre->x][arbre->y - 1])){
-        noeud = trouverNoeud(arbre->haut, x, y, dejaVus, hauteur, largeur);
-    }
-    if (noeud == NULL && arbre->y + 1 < hauteur && !(dejaVus[arbre->x][arbre->y + 1])){
-        noeud = trouverNoeud(arbre->bas, x, y, dejaVus, hauteur, largeur);
-    }
-    return noeud;
 }
 
 

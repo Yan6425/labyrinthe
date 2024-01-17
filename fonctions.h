@@ -34,8 +34,9 @@ int** allouerLabyrinthe(int n, int N);
 void initialiserLabyrinthe(int** labyrinthe, int n, int N);
 void lireTXT(const char* nomFichier, int** labyrinthe);
 void creerArbre(Arbre arbre, int** labyrinthe, int x, int y, int hauteur, int largeur);
+void creerArbreCache(Arbre arbre, int** labyrinthe, int x, int y, int hauteur, int largeur, Arbre** noeudsDejaVus);
+void initNoeudsDejaVus(Arbre** NoeudsDejaVus, int hauteur, int largeur);
 void initDejaVus(int** dejaVus, int hauteur, int largeur);
-Arbre trouverNoeud(Arbre arbre, int x, int y, int** dejaVus, int hauteur, int largeur);
 void afficherArbre(Arbre arbre, int** dejaVus);
 
 
