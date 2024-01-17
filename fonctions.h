@@ -24,7 +24,6 @@ int deplacement(int** labyrinthe,int n,Joueur j,int hauteur, int largeur,int* fi
 
 
 // affichage.c
-void debut();
 void afficherLabyrinthe(int** labyrinthe,int a, int b, Joueur u);
 void afficherVie(Joueur j);
 void afficherNiveau(int n);
@@ -39,12 +38,14 @@ void lireTXT(const char* nomFichier,int** labyrinthe);
 
 
 // menu.c
-void hautMenu(int* positionMenu);
-void basMenu(int* positionMenu);
 void afficherMenu(int positionMenu);
 void afficherRegles();
 void afficherDifficulte(int positionMenu);
+void debut();
+void affichageFinMenu();
+void hautMenu(int* positionMenu);
+void basMenu(int* positionMenu);
 void entreeMenu(int* positionMenu,int* start,int* difficulte);
-int deplacementMenu(int* fin);
+void deplacementMenu(int* fin,int* difficulte);
 
 #endif

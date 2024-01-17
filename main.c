@@ -13,10 +13,9 @@ int main(){
     Joueur j;
     int hauteur;
     int largeur;
-    int difficulte;
+    int difficulte=2;
     int fin=0;
-    debut();
-    difficulte=deplacementMenu(&fin);
+    deplacementMenu(&fin,&difficulte);
     if (fin==1){
         exit(fin);
     }

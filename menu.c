@@ -45,6 +45,8 @@ void afficherRegles(){
     printf("▐   -10 labyrinthes à compléter                 ▌\n\r");
     printf("▐   -utiliser les flèches pour se déplacer      ▌\n\r");
     printf("▐                                               ▌\n\r");
+    printf("▐                   \e[1mRetour\e[0m                      ▌\n\r");
+    printf("▐                                               ▌\n\r");
     printf("🬁🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬀\n\r");
 }
 
@@ -78,6 +80,33 @@ void afficherDifficulte(int positionMenu){
     }
 }
 
+void debut(){
+    printf("\x1b[2J\x1b[H");
+    printf("🬞🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬏\n");
+    printf("▐                       ▌\n");
+    printf("▐   Bienvenue dans le   ▌\n");
+    printf("▐   Jeu du Labyrinthe   ▌\n");
+    printf("▐                       ▌\n");
+    printf("🬁🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬀\n");
+    sleep(2);
+    printf("\x1b[2J\x1b[H");
+    printf("🬞🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬏\n");
+    printf("▐                                           ▌\n");
+    printf("▐  Appuyez sur entrée pour accéder au menu  ▌\n");
+    printf("▐                                           ▌\n");
+    printf("🬁🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬀\n");
+}
+
+void affichageFinMenu(){
+    printf("\x1b[2J\x1b[H");
+    printf("🬞🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬏\n");
+    printf("▐                                           ▌\n");
+    printf("▐  Appuyez sur entrée pour accéder au jeu   ▌\n");
+    printf("▐                                           ▌\n");
+    printf("🬁🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬀\n");
+}
+
+
 void hautMenu(int* positionMenu){
     if (*positionMenu==1){
         *positionMenu=3;
@@ -97,50 +126,47 @@ void basMenu(int* positionMenu){
 }
 
 void entreeMenu(int* positionMenu,int* start,int* difficulte){
-    switch(*positionMenu){
-        case 1:
-            *start=1;
-            break;
-        case 2:
-            if(*start==2){
-                *positionMenu=2;
-                *start=0;
+    switch(*start){
+        case 0:
+            if (*positionMenu==1){
+                *start=1;
             }
-            else{
+            else if (*positionMenu==2){
                 *start=2;
             }
-            break;
-        case 3:
-            if (*start==3){
-                if (*positionMenu==1){
-                    *difficulte=3;
-                }
-                else if (*positionMenu==2){
-                    *difficulte=2;
-                }
-                else{
-                    *difficulte=1;
-                }
-                *start=0;
-            }
-            else {
+            else{
                 *start=3;
                 *positionMenu=1;
             }
             break;
-        default:
+        case 2:
+            *positionMenu=2;
+            *start=0;
             break;
-        
+        case 3:
+            if (*positionMenu==1){
+                *difficulte=3;
+            }
+            else if (*positionMenu==2){
+                *difficulte=2;
+            }
+            else {
+                *difficulte=1;
+            }
+            *start=0;
+            break;
+        default:
+            break;        
     }
 }
 
-int deplacementMenu(int* fin){
+void deplacementMenu(int* fin,int* difficulte){
     struct termios tty_opts_backup, tty_opts_raw;
     char c;
     int pastermine=1;//par défaut on le met à vrai
     int positionMenu=1;
     int start=0;
-    int difficulte=2;
+    debut();
     /* ON VIDE LE BUFFER*/
     emptyBuffer();
 
@@ -151,10 +177,18 @@ int deplacementMenu(int* fin){
     // Change TTY settings mode
     cfmakeraw(&tty_opts_raw);
     tcsetattr(STDIN_FILENO, TCSANOW, &tty_opts_raw);
-
     while (pastermine){
-        c =getchar();
-        printf("\x1b[2J\x1b[H");        
+        printf("\x1b[2J\x1b[H");
+        if(start==0){
+            afficherMenu(positionMenu);
+        }
+        else if (start==2){
+            afficherRegles();
+        }
+        else if (start==3) {
+            afficherDifficulte(positionMenu);
+        }    
+        c =getchar();    
         switch(c){
             case 27:
                 c=getchar();
@@ -172,7 +206,7 @@ int deplacementMenu(int* fin){
                                 break;
                             }
                         case 'C':
-                            entreeMenu(&positionMenu,&start,&difficulte);
+                            entreeMenu(&positionMenu,&start,difficulte);
                             break;                        
                         default :
                             break;
@@ -186,22 +220,12 @@ int deplacementMenu(int* fin){
             default:
                 break;
         }
-        if(start==0){
-            afficherMenu(positionMenu);
-        }
-        else if (start==2){
-            afficherRegles();
-        }
-        else {
-            afficherDifficulte(positionMenu);
-        }
         if (start==1){
-            pastermine=1;
+            pastermine=0;
         }
     }
     /* NE PAS OUBLIER : sinon on ne peut plus écrire dans le terminal */
     // Restore previous TTY settings
     tcsetattr(STDIN_FILENO, TCSANOW, &tty_opts_backup);
-
-    return difficulte;
+    affichageFinMenu();
 }

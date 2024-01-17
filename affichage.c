@@ -6,23 +6,6 @@
 #include <termios.h>
 #include <string.h>
 
-void debut(){
-    printf("\x1b[2J\x1b[H");
-    printf("🬞🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬏\n");
-    printf("▐                       ▌\n");
-    printf("▐   Bienvenue dans le   ▌\n");
-    printf("▐   Jeu du Labyrinthe   ▌\n");
-    printf("▐                       ▌\n");
-    printf("🬁🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬀\n");
-    sleep(2);
-    printf("\x1b[2J\x1b[H");
-    printf("🬞🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬏\n");
-    printf("▐                                           ▌\n");
-    printf("▐   Appuyez sur entrée pour lancer le jeu   ▌\n");
-    printf("▐                                           ▌\n");
-    printf("🬁🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬀\n");
-}
-
 void afficherLabyrinthe(int** labyrinthe,int hauteur, int largeur, Joueur joueur){
     printf("\n\r");
     for (int i=(joueur->x)-(joueur->vision);i<=(joueur->x)+(joueur->vision);i++){
@@ -40,7 +23,7 @@ void afficherLabyrinthe(int** labyrinthe,int hauteur, int largeur, Joueur joueur
                 printf("👀");
             }
             else if (labyrinthe[i][j]==4){
-                printf(" ☕");
+                printf("☕");
             }
             else if (labyrinthe[i][j]==5){
                 if (verifierAvion(joueur) && (joueur->x==i) && (joueur->y==j)){
