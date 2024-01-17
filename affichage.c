@@ -64,6 +64,9 @@ void afficherMap(int** labyrinthe,int hauteur, int largeur){
             if (labyrinthe[i][j]==2){
                 printf("⬛");
             }
+            else if (labyrinthe[i][j]==0){
+                printf("🛏️ ");
+            }
             else {
                 printf("  ");
             }
