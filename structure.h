@@ -10,6 +10,7 @@ typedef struct humain{
     int avion;
     int vision;
     int sens;
+    int somnifere;
 }humain;
 typedef humain* Joueur;
 
