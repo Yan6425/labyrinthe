@@ -121,7 +121,7 @@ void entreeMenu(int* positionMenu,int* start,int* difficulte){
                 else{
                     *difficulte=1;
                 }
-                *start=1;
+                *start=0;
             }
             else {
                 *start=3;
