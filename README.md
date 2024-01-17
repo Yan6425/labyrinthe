@@ -22,3 +22,5 @@ Déplacement dans le menu :
 
 Déplacement dans le jeu : 
     Flèche haut/bas/droite/gauche pour se déplacer
+
+Saisir a pendant le déplacement dans le menu ou dans le labyrinthe pour arrêter le programme
