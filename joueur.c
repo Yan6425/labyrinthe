@@ -7,12 +7,14 @@
 #include <string.h>
 
 Joueur creerJoueur(Joueur j,int difficulte){
+    j=malloc(7*sizeof(int));
     j->x=1;
     j->y=1;
     j->vie=3;
     j->avion=0;
     j->vision=difficulte;
     j->sens=1;
+    j->somnifere=1;
     return j;
 }
 
@@ -98,8 +100,21 @@ Joueur avionMoins(Joueur j, int shield){
     return j;
 }
 
+void somnifere(Joueur j,int* som){
+    if ((j->somnifere)>1){
+        afficherSomnifere(j,*som);
+        *som=(*som)+1;
+        if (j->somnifere>2){
+            (j->somnifere)--;
+        }
+        else{
+            j->somnifere=0;
+        }
+    }
+}
+
 int estMort(Joueur j){
-    if (j->vie<=0){
+    if ((j->vie<=0) || (j->somnifere<=0)){
         return 1;
     }
     else {
@@ -150,6 +165,10 @@ void actionCase(int** labyrinthe, Joueur j,int hauteur,int largeur){
             retirerPotion(labyrinthe,j);
             afficherMap(labyrinthe,hauteur,largeur);
             sleep(5);
+            break;        
+        case 10:
+            retirerPotion(labyrinthe,j);
+            (j->somnifere)=5;
             break;
         default : 
             break;
@@ -160,6 +179,7 @@ int deplacement(int** labyrinthe,int n,Joueur j,int hauteur, int largeur,int* fi
     struct termios tty_opts_backup, tty_opts_raw;
     char c;
     int pastermine=1;//par défaut on le met à vrai
+    int som=1;
 
     /* ON VIDE LE BUFFER*/
     emptyBuffer();
@@ -177,6 +197,7 @@ int deplacement(int** labyrinthe,int n,Joueur j,int hauteur, int largeur,int* fi
         afficherNiveau(n);
         afficherLabyrinthe(labyrinthe,hauteur,largeur,j);
         afficherVie(j); 
+        somnifere(j,&som);
         c =getchar();
         switch(c){
             case 27:
@@ -246,6 +267,10 @@ int deplacement(int** labyrinthe,int n,Joueur j,int hauteur, int largeur,int* fi
             afficherVie(j);
             if (labyrinthe[j->x][j->y]==5){
                 printf("\n\rVous êtes mort ! Pour réessayer appuyer sur entrée !");
+            }
+            else if (j->somnifere<=0){
+                afficherSomnifere(j,som);
+                printf("\n\rVous vous êtes endormi ! Pour réessayer appuyer sur entrée !");
             }
             else {
                 printf("\n\rVous vous êtes endormi ! Pour réessayer appuyer sur entrée !");

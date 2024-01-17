@@ -43,6 +43,8 @@ Joueur avionPlus(Joueur j, int shield);
 /* Enlève l'avion au joueur */
 Joueur avionMoins(Joueur j, int shield);
 
+void somnifere(Joueur j,int* som);
+
 /* Vérifie si le joueur est mort */
 int estMort(Joueur j);
 
@@ -68,6 +70,8 @@ void afficherMap(int** labyrinthe,int hauteur, int largeur);
 
 /* Affiche l'énergie restante du joueur */
 void afficherVie(Joueur j);
+
+void afficherSomnifere(Joueur j,int n);
 
 /* Affiche le niveau actuel du jeu */
 void afficherNiveau(int n);

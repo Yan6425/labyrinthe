@@ -45,6 +45,9 @@ void afficherLabyrinthe(int** labyrinthe,int hauteur, int largeur, Joueur joueur
             else if (labyrinthe[i][j]==9){
                 printf("🗺️ ");
             }
+            else if (labyrinthe[i][j]==10){
+                printf("🧪 ");
+            }
             else if (labyrinthe[i][j]==0){
                 printf("🛏️ ");
             }
@@ -80,6 +83,17 @@ void afficherVie(Joueur j){
     for (int i=0;i<j->vie;i++){
         printf("🔋");
     }
+}
+
+void afficherSomnifere(Joueur j,int n){
+    printf("\n\rFlash s'endort : [");
+    for (int i=0;i<n;i++){
+        printf("🫧");
+    }
+    for (int i=n;i<5;i++){
+        printf("  ");
+    }
+    printf("]\n");
 }
 
 void afficherNiveau(int n){
