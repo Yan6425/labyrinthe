@@ -12,7 +12,7 @@ Joueur creerJoueur(Joueur j,int difficulte){
     j->y=1;
     j->vie=3;
     j->avion=0;
-    j->vision=difficulte;
+    j->vision=20;
     j->sens=1;
     j->somnifere=1;
     return j;
@@ -168,7 +168,7 @@ void actionCase(int** labyrinthe, Joueur j,int hauteur,int largeur){
             break;        
         case 10:
             retirerPotion(labyrinthe,j);
-            (j->somnifere)=5;
+            (j->somnifere)=48;
             break;
         default : 
             break;

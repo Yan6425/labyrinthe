@@ -46,7 +46,7 @@ void afficherLabyrinthe(int** labyrinthe,int hauteur, int largeur, Joueur joueur
                 printf("🗺️ ");
             }
             else if (labyrinthe[i][j]==10){
-                printf("🧪 ");
+                printf("🧪");
             }
             else if (labyrinthe[i][j]==0){
                 printf("🛏️ ");
@@ -90,7 +90,7 @@ void afficherSomnifere(Joueur j,int n){
     for (int i=0;i<n;i++){
         printf("🫧");
     }
-    for (int i=n;i<5;i++){
+    for (int i=n;i<48;i++){
         printf("  ");
     }
     printf("]\n");
