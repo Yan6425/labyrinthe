@@ -154,6 +154,7 @@ void entreeMenu(int* positionMenu,int* start,int* difficulte){
                 *difficulte=1;
             }
             *start=0;
+            *positionMenu=1;
             break;
         default:
             break;        
