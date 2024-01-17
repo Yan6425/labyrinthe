@@ -3,7 +3,7 @@
 
 
 // joueur.c
-Joueur creerJoueur(Joueur j);
+Joueur creerJoueur(Joueur j,int difficulte);
 int verifierAvion(Joueur j);
 int caseLibre(int** labyrinthe,int hauteur, int largeur, int x, int y,Joueur j);
 int victoire(int** labyrinthe,Joueur j);
@@ -24,7 +24,6 @@ int deplacement(int** labyrinthe,int n,Joueur j,int hauteur, int largeur,int* fi
 
 
 // affichage.c
-void debut();
 void afficherLabyrinthe(int** labyrinthe,int a, int b, Joueur u);
 void afficherVie(Joueur j);
 void afficherNiveau(int n);
@@ -41,5 +40,16 @@ void initDejaVus(int** dejaVus, int hauteur, int largeur);
 Arbre trouverNoeud(Arbre arbre, int x, int y, int** dejaVus, int hauteur, int largeur);
 void afficherArbre(Arbre arbre, int** dejaVus);
 
+
+// menu.c
+void afficherMenu(int positionMenu);
+void afficherRegles();
+void afficherDifficulte(int positionMenu);
+void debut();
+void affichageFinMenu();
+void hautMenu(int* positionMenu);
+void basMenu(int* positionMenu);
+void entreeMenu(int* positionMenu,int* start,int* difficulte);
+void deplacementMenu(int* fin,int* difficulte);
 
 #endif

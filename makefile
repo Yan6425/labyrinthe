@@ -1,6 +1,6 @@
-exe: plateau.o joueur.o affichage.o main.o
+exe: menu.o plateau.o joueur.o affichage.o main.o
 	@echo "Compilation de l'exécutable."
-	gcc affichage.o plateau.o joueur.o main.o -o labyrinthe.exe
+	gcc menu.o affichage.o plateau.o joueur.o main.o -o labyrinthe.exe
 
 affichage.o: affichage.c structure.h fonctions.h 
 	@echo "Compilation de affichage."
@@ -13,6 +13,10 @@ joueur.o: joueur.c structure.h fonctions.h
 plateau.o: plateau.c structure.h fonctions.h
 	@echo "Compilation de plateau."
 	gcc -c -Wall plateau.c -o plateau.o
+
+menu.o: menu.c structure.h fonctions.h
+	@echo "Compilation de menu."
+	gcc -c -Wall menu.c -o menu.o
 
 main.o: main.c structure.h fonctions.h
 	@echo "Compilation du main."
