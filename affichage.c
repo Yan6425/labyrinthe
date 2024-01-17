@@ -42,6 +42,9 @@ void afficherLabyrinthe(int** labyrinthe,int hauteur, int largeur, Joueur joueur
             else if (labyrinthe[i][j]==8){
                 printf("🍺");
             }
+            else if (labyrinthe[i][j]==9){
+                printf("🗺️ ");
+            }
             else if (labyrinthe[i][j]==0){
                 printf("🛏️ ");
             }
@@ -50,6 +53,22 @@ void afficherLabyrinthe(int** labyrinthe,int hauteur, int largeur, Joueur joueur
             }
         }
         printf("\n\r");
+    }
+}
+
+void afficherMap(int** labyrinthe,int hauteur, int largeur){
+    printf("\x1b[2J\x1b[H");
+    printf("\n\r");
+    for (int i=0;i<hauteur;i++){
+        for (int j=0;j<largeur;j++){
+            if (labyrinthe[i][j]==2){
+                printf("⬛");
+            }
+            else {
+                printf("  ");
+            }
+        }
+    printf("\n\r");
     }
 }
 

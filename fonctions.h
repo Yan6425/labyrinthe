@@ -53,7 +53,7 @@ int valeurCase(int** labyrinthe,Joueur j);
 void retirerPotion(int** labyrinthe, Joueur j);
 
 /* Effectue l'action de la case sur laquelle le joueur est */
-void actionCase(int** labyrinthe,Joueur j);
+void actionCase(int** labyrinthe,Joueur j,int hauteur,int largeur);
 
 /* Fonction principale du jeu qui permet d'utiliser les flèches du clavier pour se déplacer et d'autres touches (voir README) */
 int deplacement(int** labyrinthe,int n,Joueur j,int hauteur, int largeur,int* fin);
@@ -63,6 +63,8 @@ int deplacement(int** labyrinthe,int n,Joueur j,int hauteur, int largeur,int* fi
 
 /* Affiche le labyrinthe */
 void afficherLabyrinthe(int** labyrinthe,int a, int b, Joueur u);
+
+void afficherMap(int** labyrinthe,int hauteur, int largeur);
 
 /* Affiche l'énergie restante du joueur */
 void afficherVie(Joueur j);

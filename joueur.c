@@ -115,7 +115,7 @@ void retirerPotion(int** labyrinthe, Joueur j){
     labyrinthe[j->x][j->y]=1;  
 }
 
-void actionCase(int** labyrinthe, Joueur j){
+void actionCase(int** labyrinthe, Joueur j,int hauteur,int largeur){
     int cellule=valeurCase(labyrinthe,j);
     switch(cellule){
         case 1:
@@ -144,6 +144,11 @@ void actionCase(int** labyrinthe, Joueur j){
         case 8:
             j->sens=0;
             retirerPotion(labyrinthe,j);
+            break;
+        case 9:
+            retirerPotion(labyrinthe,j);
+            afficherMap(labyrinthe,hauteur,largeur);
+            sleep(5);
             break;
         default : 
             break;
@@ -233,7 +238,7 @@ int deplacement(int** labyrinthe,int n,Joueur j,int hauteur, int largeur,int* fi
             default:
                 break;
         }
-        actionCase(labyrinthe,j);
+        actionCase(labyrinthe,j,hauteur,largeur);
         if (estMort(j)){
             printf("\x1b[2J\x1b[H");
             afficherNiveau(n);
