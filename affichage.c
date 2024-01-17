@@ -14,13 +14,13 @@ void afficherLabyrinthe(int** labyrinthe,int hauteur, int largeur, Joueur joueur
                 printf("  ");
             }
             else if (labyrinthe[i][j]==2){
-                printf("🧱");
+                printf("⬛");
             }
             else if ((joueur->x==i) && (joueur->y==j) && (labyrinthe[i][j]!=5)){
                 printf("🦥");
             }
             else if (labyrinthe[i][j]==3){
-                printf("👀");
+                printf("👓");
             }
             else if (labyrinthe[i][j]==4){
                 printf("☕");
@@ -32,15 +32,6 @@ void afficherLabyrinthe(int** labyrinthe,int hauteur, int largeur, Joueur joueur
                 else {
                     printf("🕳️ ");
                 }
-            }
-            else if (labyrinthe[i][j]==6){
-                printf("💤");
-            }
-            else if (labyrinthe[i][j]==7){
-                printf("🛩️ ");
-            }
-            else if (labyrinthe[i][j]==8){
-                printf("🍺");
             }
             else if (labyrinthe[i][j]==6){
                 printf("💤");
