@@ -108,3 +108,27 @@ void afficherNiveau(int n){
         printf("🬁🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬀");
     }
 }
+
+void afficherMort(int n,int** labyrinthe, int hauteur, int largeur, Joueur j,int som){
+    printf("\x1b[2J\x1b[H");
+    afficherNiveau(n);
+    afficherLabyrinthe(labyrinthe,hauteur,largeur,j);
+    afficherVie(j);
+    if (labyrinthe[j->x][j->y]==5){
+        printf("\n\rVous êtes mort ! Pour réessayer appuyer sur entrée !");
+    }
+    else if (j->somnifere<=0){
+        afficherSomnifere(j,som);
+        printf("\n\rVous vous êtes endormi ! Pour réessayer appuyer sur entrée !");
+    }
+    else {
+        printf("\n\rVous vous êtes endormi ! Pour réessayer appuyer sur entrée !");
+    }
+}
+
+void afficherVictoire(int n,int** labyrinthe, int hauteur, int largeur, Joueur j){
+    printf("\x1b[2J\x1b[H");
+    afficherNiveau(n);
+    afficherLabyrinthe(labyrinthe,hauteur,largeur,j);
+    printf("Labyrinthe fini ! Appuyez sur entrée pour continuer !");
+}

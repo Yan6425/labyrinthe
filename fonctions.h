@@ -76,6 +76,9 @@ void afficherSomnifere(Joueur j,int n);
 /* Affiche le niveau actuel du jeu */
 void afficherNiveau(int n);
 
+void afficherMort(int n,int** labyrinthe, int hauteur, int largeur, Joueur j,int som);
+
+void afficherVictoire(int n,int** labyrinthe, int hauteur, int largeur, Joueur j);
 
 // plateau.c
 

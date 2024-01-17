@@ -260,31 +260,15 @@ int deplacement(int** labyrinthe,int n,Joueur j,int hauteur, int largeur,int* fi
                 break;
         }
         actionCase(labyrinthe,j,hauteur,largeur);
-        if (estMort(j)){
-            printf("\x1b[2J\x1b[H");
-            afficherNiveau(n);
-            afficherLabyrinthe(labyrinthe,hauteur,largeur,j);
-            afficherVie(j);
-            if (labyrinthe[j->x][j->y]==5){
-                printf("\n\rVous êtes mort ! Pour réessayer appuyer sur entrée !");
-            }
-            else if (j->somnifere<=0){
-                afficherSomnifere(j,som);
-                printf("\n\rVous vous êtes endormi ! Pour réessayer appuyer sur entrée !");
-            }
-            else {
-                printf("\n\rVous vous êtes endormi ! Pour réessayer appuyer sur entrée !");
-            }            
+        if (estMort(j)){   
+            afficherMort(n,labyrinthe,hauteur,largeur,j,som);
             sleep(1);
             pastermine=0;
             *fin=2;
         }
         if (victoire(labyrinthe,j)){
-            printf("\x1b[2J\x1b[H");
+            afficherVictoire(n,labyrinthe,hauteur,largeur,j);
             pastermine=0;
-            afficherNiveau(n);
-            afficherLabyrinthe(labyrinthe,hauteur,largeur,j);
-            printf("Labyrinthe fini ! Appuyez sur entrée pour continuer !");
         }
     }
 
