@@ -123,6 +123,7 @@ void actionCase(int** labyrinthe, Joueur j,int hauteur,int largeur){
         case 3:
             j->vision=(j->vision)+1;
             retirerPotion(labyrinthe,j); 
+            break;
         case 4:
             if(j->vie < 3){
                 j->vie=(j->vie)+1;
@@ -176,7 +177,6 @@ int deplacement(int** labyrinthe,int n,Joueur j,int hauteur, int largeur,int* fi
         afficherNiveau(n);
         afficherLabyrinthe(labyrinthe,hauteur,largeur,j);
         afficherVie(j); 
-        // ZQSD
         c =getchar();
         switch(c){
             case 27:

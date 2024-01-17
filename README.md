@@ -15,6 +15,7 @@ Présentation des objets :
     🕳️ : Si Flash n'a pas d'avion il ne pourra pas traverser ce trou et mourra si il essaye de s'y aventurer
     🛩️ : Avion permettant de passer au-dessus des trous
     🍺 : Flash devient bourré et ne marche plus dans le bon sens
+    🗺️ : Carte qui permet de voir la totalité du labyrinthe pendant 5 secondes sans connaitre sa position
         
 Déplacement dans le menu :
     Flèche haut/bas pour se déplacer dans le menu
