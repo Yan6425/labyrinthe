@@ -67,9 +67,6 @@ void afficherVie(Joueur j){
     for (int i=0;i<j->vie;i++){
         printf("🔋");
     }
-    for (int i=j->vie;i<3;i++){
-        printf("🪫");
-    }
 }
 
 void afficherNiveau(int n){
