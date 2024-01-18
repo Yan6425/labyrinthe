@@ -36,13 +36,13 @@ void dimensionsLab(const char* nomFichier,int* hauteur,int* largeur);
 int** allouerLabyrinthe(int n, int N);
 void initialiserLabyrinthe(int** labyrinthe, int n, int N);
 void lireTXT(const char* nomFichier, int** labyrinthe);
-void creerArbre(Arbre* arbre, int** labyrinthe, int x, int y, int hauteur, int largeur);
-void creerArbreCache(Arbre* arbre, int** labyrinthe, int x, int y, int hauteur, int largeur, Arbre** noeudsDejaVus);
+Arbre creerArbre(int** labyrinthe, int x, int y, int hauteur, int largeur);
 Arbre** initNoeudsDejaVus(int hauteur, int largeur);
-int** initDejaVus(int hauteur, int largeur);
-void initArbre(Arbre* arbre);
+Arbre creerArbreCache(int** labyrinthe, int x, int y, int hauteur, int largeur, Arbre** noeudsDejaVus);
+Arbre initArbre(int x, int y, int valeur);
 void afficherArbre(Arbre arbre, int hauteur, int largeur);
 void afficherArbreCache(Arbre arbre, int** dejaVus);
+int** initDejaVus(int hauteur, int largeur);
 
 
 #endif
