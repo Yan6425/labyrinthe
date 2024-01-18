@@ -24,7 +24,7 @@ int main(){
     lireTXT(nomFichier,labyrinthe);
     afficherLabyrinthe(labyrinthe,hauteur,largeur,j);
     Arbre arbre = malloc(sizeof(Noeud));
-    creerArbre(arbre, labyrinthe, 1, 1, hauteur, largeur);
+    creerArbre(&arbre, labyrinthe, 1, 1, hauteur, largeur);
     afficherArbre(arbre, hauteur, largeur);
     
     return 0;

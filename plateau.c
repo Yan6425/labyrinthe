@@ -113,98 +113,100 @@ void initArbre(Arbre* arbre){
 }
 
 
-void creerArbre(Arbre arbre, int** labyrinthe, int x, int y, int hauteur, int largeur){
-    Arbre** noeudsDejaVus = malloc(largeur * sizeof(Arbre*));
-    initArbre(&arbre);
-    initNoeudsDejaVus(noeudsDejaVus, hauteur, largeur);
+void creerArbre(Arbre* arbre, int** labyrinthe, int x, int y, int hauteur, int largeur){
+    Arbre** noeudsDejaVus = initNoeudsDejaVus(hauteur, largeur);
+    initArbre(arbre);
     creerArbreCache(arbre, labyrinthe, x, y, hauteur, largeur, noeudsDejaVus);
 }
 
 
-void creerArbreCache(Arbre arbre, int** labyrinthe, int x, int y, int hauteur, int largeur, Arbre** noeudsDejaVus){
-    arbre->x = x;
-    arbre->y = y;
-    arbre->valeur = labyrinthe[y][x];
-    noeudsDejaVus[x][y] = arbre;
+void creerArbreCache(Arbre* arbre, int** labyrinthe, int x, int y, int hauteur, int largeur, Arbre** noeudsDejaVus){
+    (*arbre)->x = x;
+    (*arbre)->y = y;
+    (*arbre)->valeur = labyrinthe[y][x];
+    noeudsDejaVus[x][y] = *arbre;
     if (x - 1 >= 0 && labyrinthe[y][x - 1] != 2) {
-        if (arbre->gauche == NULL) {
-            arbre->gauche = noeudsDejaVus[x - 1][y];
-            if (arbre->gauche != NULL) {
-                arbre->gauche->droite = arbre;
+        if ((*arbre)->gauche == NULL) {
+            (*arbre)->gauche = noeudsDejaVus[x - 1][y];
+            if ((*arbre)->gauche != NULL) {
+                (*arbre)->gauche->droite = *arbre;
             }
         }
-        if (arbre->gauche == NULL) {
-            initArbre(&(arbre->gauche));
-            arbre->gauche->droite = arbre;
-            creerArbreCache(arbre->gauche, labyrinthe, x - 1, y, hauteur, largeur, noeudsDejaVus);
+        if ((*arbre)->gauche == NULL) {
+            initArbre(&((*arbre)->gauche));
+            (*arbre)->gauche->droite = (*arbre);
+            creerArbreCache(&((*arbre)->gauche), labyrinthe, x - 1, y, hauteur, largeur, noeudsDejaVus);
         }
     }
     if (x + 1 < largeur && labyrinthe[y][x + 1] != 2) {
-        if (arbre->droite == NULL) {
-            arbre->droite = noeudsDejaVus[x + 1][y];
-            if (arbre->droite != NULL) {
-                arbre->droite->gauche = arbre;
+        if ((*arbre)->droite == NULL) {
+            (*arbre)->droite = noeudsDejaVus[x + 1][y];
+            if ((*arbre)->droite != NULL) {
+                (*arbre)->droite->gauche = *arbre;
             }
         }
-        if (arbre->droite == NULL) {
-            initArbre(&(arbre->droite));
-            arbre->droite->gauche = arbre;
-            creerArbreCache(arbre->droite, labyrinthe, x + 1, y, hauteur, largeur, noeudsDejaVus);
+        if ((*arbre)->droite == NULL) {
+            initArbre(&((*arbre)->droite));
+            (*arbre)->droite->gauche = *arbre;
+            creerArbreCache(&((*arbre)->droite), labyrinthe, x + 1, y, hauteur, largeur, noeudsDejaVus);
         }
     }
     if (y - 1 >= 0 && labyrinthe[y - 1][x] != 2) {
-        if (arbre->haut == NULL) {
-            arbre->haut = noeudsDejaVus[x][y - 1];
-            if (arbre->haut != NULL) {
-                arbre->haut->bas = arbre;
+        if ((*arbre)->haut == NULL) {
+            (*arbre)->haut = noeudsDejaVus[x][y - 1];
+            if ((*arbre)->haut != NULL) {
+                (*arbre)->haut->bas = *arbre;
             }
         }
-        if (arbre->haut == NULL) {
-            initArbre(&(arbre->haut));  
-            arbre->haut->bas = arbre;
-            creerArbreCache(arbre->haut, labyrinthe, x, y - 1, hauteur, largeur, noeudsDejaVus);
+        if ((*arbre)->haut == NULL) {
+            initArbre(&((*arbre)->haut));  
+            (*arbre)->haut->bas = (*arbre);
+            creerArbreCache(&((*arbre)->haut), labyrinthe, x, y - 1, hauteur, largeur, noeudsDejaVus);
         }
     }
     if (y + 1 < hauteur && labyrinthe[y + 1][x] != 2) {
-        if (arbre->bas == NULL) {
-            arbre->bas = noeudsDejaVus[x][y + 1];
-            if (arbre->bas != NULL) {
-                arbre->bas->haut = arbre;
+        if ((*arbre)->bas == NULL) {
+            (*arbre)->bas = noeudsDejaVus[x][y + 1];
+            if ((*arbre)->bas != NULL) {
+                (*arbre)->bas->haut = *arbre;
             }
         }
-        if (arbre->bas == NULL) {
-            initArbre(&(arbre->bas));
-            arbre->bas->haut = arbre;
-            creerArbreCache(arbre->bas, labyrinthe, x, y + 1, hauteur, largeur, noeudsDejaVus);
+        if ((*arbre)->bas == NULL) {
+            initArbre(&((*arbre)->bas));
+            (*arbre)->bas->haut = (*arbre);
+            creerArbreCache(&((*arbre)->bas), labyrinthe, x, y + 1, hauteur, largeur, noeudsDejaVus);
         }
     }
 }
 
 
-void initNoeudsDejaVus(Arbre** noeudsDejaVus, int hauteur, int largeur){
+Arbre** initNoeudsDejaVus(int hauteur, int largeur){
+    Arbre** noeudsDejaVus = malloc(largeur * sizeof(Arbre*));
     for (int i = 0; i < largeur; i++) {
         noeudsDejaVus[i] = malloc(hauteur * sizeof(Arbre));
         for (int j = 0; j < hauteur; j++) {
             noeudsDejaVus[i][j] = NULL;
         }
     }
+    return noeudsDejaVus;
 }
 
 
-void initDejaVus(int** dejaVus, int hauteur, int largeur){
+int** initDejaVus(int hauteur, int largeur){
+    int** dejaVus = malloc(largeur * sizeof(int*));
     for (int i = 0; i < largeur; i++) {
         dejaVus[i] = malloc(hauteur * sizeof(int));
         for (int j = 0; j < hauteur; j++) {
             dejaVus[i][j] = 0;
         }
     }
+    return dejaVus;
 }
 
 
-void afficherArbre(Arbre arbre, int largeur, int hauteur){
+void afficherArbre(Arbre arbre, int hauteur, int largeur){
     if (arbre != NULL){
-        int** dejaVus = malloc(largeur * sizeof(int*));
-        initDejaVus(dejaVus, hauteur, largeur);
+        int** dejaVus = initDejaVus(hauteur, largeur);
         afficherArbreCache(arbre, dejaVus);
     }
 }
@@ -217,6 +219,7 @@ void afficherArbreCache(Arbre arbre, int** dejaVus) {
     if (dejaVus[arbre->x][arbre->y]) {
         return;
     }
+
     dejaVus[arbre->x][arbre->y] = 1;
     printf("Node content: %d (%d, %d) ", arbre->valeur, arbre->x, arbre->y);
     if (arbre->gauche != NULL) {
