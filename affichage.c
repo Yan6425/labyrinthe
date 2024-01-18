@@ -88,7 +88,7 @@ void afficherVie(Joueur j){
 void afficherSomnifere(Joueur j,int n){
     printf("\n\rFlash s'endort : [");
     for (int i=0;i<n;i++){
-        printf("🫧");
+        printf("💤");
     }
     for (int i=n;i<48;i++){
         printf("  ");
