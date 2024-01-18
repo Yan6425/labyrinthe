@@ -90,7 +90,7 @@ void afficherSomnifere(Joueur j,int n){
     for (int i=0;i<n;i++){
         printf("💤");
     }
-    for (int i=n;i<48;i++){
+    for (int i=n;i<49;i++){
         printf("  ");
     }
     printf("]\n");

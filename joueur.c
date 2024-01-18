@@ -168,7 +168,7 @@ void actionCase(int** labyrinthe, Joueur j,int hauteur,int largeur){
             break;        
         case 10:
             retirerPotion(labyrinthe,j);
-            (j->somnifere)=48;
+            (j->somnifere)=49;
             break;
         default : 
             break;
