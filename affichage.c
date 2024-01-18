@@ -6,34 +6,6 @@
 #include <termios.h>
 #include <string.h>
 
-void debut(){
-    printf("\x1b[2J\x1b[H");
-    printf("🬞🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬏\n");
-    printf("▐                       ▌\n");
-    printf("▐   Bienvenue dans le   ▌\n");
-    printf("▐   Jeu du Labyrinthe   ▌\n");
-    printf("▐                       ▌\n");
-    printf("🬁🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬀\n");
-    sleep(2);
-    printf("\x1b[2J\x1b[H");
-    printf("🬞🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬏\n");
-    printf("▐                                               ▌\n");
-    printf("▐   Règles :                                    ▌\n");
-    printf("▐   -trouver le lit avant que le paresseux      ▌\n");
-    printf("▐    ne s'endorme                               ▌\n");
-    printf("▐   -10 labyrinthes à compléter                 ▌\n");
-    printf("▐   -utiliser les flèches pour se déplacer      ▌\n");
-    printf("▐                                               ▌\n");
-    printf("🬁🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬀\n");
-    sleep(4);
-    printf("\x1b[2J\x1b[H");
-    printf("🬞🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬏\n");
-    printf("▐                                           ▌\n");
-    printf("▐   Appuyez sur entrée pour lancer le jeu   ▌\n");
-    printf("▐                                           ▌\n");
-    printf("🬁🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬀\n");
-}
-
 void afficherLabyrinthe(int** labyrinthe,int hauteur, int largeur, Joueur joueur){
     printf("\n\r");
     for (int i=(joueur->x)-(joueur->vision);i<=(joueur->x)+(joueur->vision);i++){
@@ -42,16 +14,16 @@ void afficherLabyrinthe(int** labyrinthe,int hauteur, int largeur, Joueur joueur
                 printf("  ");
             }
             else if (labyrinthe[i][j]==2){
-                printf("🧱");
+                printf("⬛");
             }
             else if ((joueur->x==i) && (joueur->y==j) && (labyrinthe[i][j]!=5)){
                 printf("🦥");
             }
             else if (labyrinthe[i][j]==3){
-                printf("👀");
+                printf("👓");
             }
             else if (labyrinthe[i][j]==4){
-                printf(" ☕");
+                printf("☕");
             }
             else if (labyrinthe[i][j]==5){
                 if (verifierAvion(joueur) && (joueur->x==i) && (joueur->y==j)){
@@ -70,6 +42,12 @@ void afficherLabyrinthe(int** labyrinthe,int hauteur, int largeur, Joueur joueur
             else if (labyrinthe[i][j]==8){
                 printf("🍺");
             }
+            else if (labyrinthe[i][j]==9){
+                printf("🗺️ ");
+            }
+            else if (labyrinthe[i][j]==10){
+                printf("🧪");
+            }
             else if (labyrinthe[i][j]==0){
                 printf("🛏️ ");
             }
@@ -81,14 +59,41 @@ void afficherLabyrinthe(int** labyrinthe,int hauteur, int largeur, Joueur joueur
     }
 }
 
+void afficherMap(int** labyrinthe,int hauteur, int largeur){
+    printf("\x1b[2J\x1b[H");
+    printf("\n\r");
+    for (int i=0;i<hauteur;i++){
+        for (int j=0;j<largeur;j++){
+            if (labyrinthe[i][j]==2){
+                printf("⬛");
+            }
+            else if (labyrinthe[i][j]==0){
+                printf("🛏️ ");
+            }
+            else {
+                printf("  ");
+            }
+        }
+    printf("\n\r");
+    }
+}
+
 void afficherVie(Joueur j){
     printf("Energie : ");
     for (int i=0;i<j->vie;i++){
         printf("🔋");
     }
-    for (int i=j->vie;i<3;i++){
-        printf("🪫");
+}
+
+void afficherSomnifere(Joueur j,int n){
+    printf("\n\rFlash s'endort : [");
+    for (int i=0;i<n;i++){
+        printf("💤");
     }
+    for (int i=n;i<49;i++){
+        printf("  ");
+    }
+    printf("]\n");
 }
 
 void afficherNiveau(int n){
@@ -98,8 +103,32 @@ void afficherNiveau(int n){
         printf("🬁🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬀");
     }
     else {
-        printf("🬞🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬏\n\r");
+        printf("🬞🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬭🬏\n\r");
         printf("▐ Niveau %d ▌\n\r",n);
         printf("🬁🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬂🬀");
     }
+}
+
+void afficherMort(int n,int** labyrinthe, int hauteur, int largeur, Joueur j,int som){
+    printf("\x1b[2J\x1b[H");
+    afficherNiveau(n);
+    afficherLabyrinthe(labyrinthe,hauteur,largeur,j);
+    afficherVie(j);
+    if (labyrinthe[j->x][j->y]==5){
+        printf("\n\rVous êtes mort ! Pour réessayer appuyer sur entrée !");
+    }
+    else if (j->somnifere<=0){
+        afficherSomnifere(j,som);
+        printf("\n\rVous vous êtes endormi ! Pour réessayer appuyer sur entrée !");
+    }
+    else {
+        printf("\n\rVous vous êtes endormi ! Pour réessayer appuyer sur entrée !");
+    }
+}
+
+void afficherVictoire(int n,int** labyrinthe, int hauteur, int largeur, Joueur j){
+    printf("\x1b[2J\x1b[H");
+    afficherNiveau(n);
+    afficherLabyrinthe(labyrinthe,hauteur,largeur,j);
+    printf("Labyrinthe fini ! Appuyez sur entrée pour continuer !");
 }

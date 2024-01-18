@@ -6,14 +6,15 @@
 #include <termios.h>
 #include <string.h>
 
-Joueur creerJoueur(Joueur j){
-    j->arbre = malloc(sizeof(Noeud));
+Joueur creerJoueur(Joueur j,int difficulte){
+    j=malloc(sizeof(humain));
     j->x=1;
     j->y=1;
     j->vie=3;
     j->avion=0;
     j->vision=2;
-    j->ivre=0;
+    j->sens=1;
+    j->somnifere=1;
     return j;
 }
 
@@ -117,8 +118,21 @@ Joueur avionMoins(Joueur j, int shield){
     return j;
 }
 
+void somnifere(Joueur j,int* som){
+    if ((j->somnifere)>1){
+        afficherSomnifere(j,*som);
+        *som=(*som)+1;
+        if (j->somnifere>2){
+            (j->somnifere)--;
+        }
+        else{
+            j->somnifere=0;
+        }
+    }
+}
+
 int estMort(Joueur j){
-    if (j->vie<=0){
+    if ((j->vie<=0) || (j->somnifere<=0)){
         return 1;
     }
     else {
@@ -134,7 +148,7 @@ void retirerPotion(int** labyrinthe, Joueur j){
     labyrinthe[j->x][j->y]=1;  
 }
 
-void actionCase(int** labyrinthe, Joueur j){
+void actionCase(int** labyrinthe, Joueur j,int hauteur,int largeur){
     int cellule=valeurCase(labyrinthe,j);
     switch(cellule){
         case 1:
@@ -142,6 +156,7 @@ void actionCase(int** labyrinthe, Joueur j){
         case 3:
             j->vision=(j->vision)+1;
             retirerPotion(labyrinthe,j); 
+            break;
         case 4:
             if(j->vie < 3){
                 j->vie=(j->vie)+1;
@@ -164,6 +179,15 @@ void actionCase(int** labyrinthe, Joueur j){
             j->ivre=1;
             retirerPotion(labyrinthe,j);
             break;
+        case 9:
+            retirerPotion(labyrinthe,j);
+            afficherMap(labyrinthe,hauteur,largeur);
+            sleep(5);
+            break;        
+        case 10:
+            retirerPotion(labyrinthe,j);
+            (j->somnifere)=50;
+            break;
         default : 
             break;
     }
@@ -173,6 +197,7 @@ int deplacement(Arbre arbre, int** labyrinthe,int n,Joueur j,int hauteur, int la
     struct termios tty_opts_backup, tty_opts_raw;
     char c;
     int pastermine=1;//par défaut on le met à vrai
+    int som=1;
 
     /* ON VIDE LE BUFFER*/
     emptyBuffer();
@@ -190,7 +215,7 @@ int deplacement(Arbre arbre, int** labyrinthe,int n,Joueur j,int hauteur, int la
         afficherNiveau(n);
         afficherLabyrinthe(labyrinthe,hauteur,largeur,j);
         afficherVie(j); 
-        // ZQSD
+        somnifere(j,&som);
         c =getchar();
         switch(c){
             case 27:
@@ -250,28 +275,16 @@ int deplacement(Arbre arbre, int** labyrinthe,int n,Joueur j,int hauteur, int la
             default:
                 break;
         }
-        actionCase(labyrinthe,j);
-        if (estMort(j)){
-            printf("\x1b[2J\x1b[H");
-            afficherNiveau(n);
-            afficherLabyrinthe(labyrinthe,hauteur,largeur,j);
-            afficherVie(j);
-            if (labyrinthe[j->x][j->y]==5){
-                printf("\n\rVous êtes mort ! Pour réessayer appuyer sur entrée !");
-            }
-            else {
-                printf("\n\rVous vous êtes endormi ! Pour réessayer appuyer sur entrée !");
-            }            
+        actionCase(labyrinthe,j,hauteur,largeur);
+        if (estMort(j)){   
+            afficherMort(n,labyrinthe,hauteur,largeur,j,som);
             sleep(1);
             pastermine=0;
             *fin=2;
         }
         if (victoire(labyrinthe,j)){
-            printf("\x1b[2J\x1b[H");
+            afficherVictoire(n,labyrinthe,hauteur,largeur,j);
             pastermine=0;
-            afficherNiveau(n);
-            afficherLabyrinthe(labyrinthe,hauteur,largeur,j);
-            printf("Labyrinthe fini ! Appuyez sur entrée pour continuer !");
         }
     }
 

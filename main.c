@@ -13,13 +13,17 @@ int main(){
     Joueur j;
     int hauteur;
     int largeur;
+    int difficulte=2;
     int fin=0;
-    debut();
+    deplacementMenu(&fin,&difficulte);
+    if (fin==1){
+        exit(fin);
+    }
     for (int i=0;i<10;i++){
         const char* nomFichier=nomLab(i);
         dimensionsLab(nomFichier,&hauteur,&largeur);
         j=malloc(1*sizeof(Joueur));
-        j=creerJoueur(j);
+        j=creerJoueur(j,difficulte);
         int** labyrinthe;
         labyrinthe=allouerLabyrinthe(hauteur,largeur);
         initialiserLabyrinthe(labyrinthe,hauteur,largeur);
