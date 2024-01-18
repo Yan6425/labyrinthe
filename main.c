@@ -25,9 +25,7 @@ int main(){
     afficherLabyrinthe(labyrinthe,hauteur,largeur,j);
     Arbre arbre = malloc(sizeof(Noeud));
     creerArbre(arbre, labyrinthe, 1, 1, hauteur, largeur);
-    int** dejaVus = malloc(largeur * sizeof(int*));
-    initDejaVus(dejaVus, hauteur, largeur);
-    //afficherArbre(arbre, dejaVus);
+    afficherArbre(arbre, hauteur, largeur);
     
     return 0;
 }

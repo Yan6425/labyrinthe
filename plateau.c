@@ -104,22 +104,29 @@ void lireTXT(const char* nomFichier,int** labyrinthe){
 }
 
 
+void initArbre(Arbre* arbre){
+    *arbre = malloc(sizeof(Noeud));
+    (*arbre)->gauche = NULL;
+    (*arbre)->droite = NULL;
+    (*arbre)->haut = NULL;
+    (*arbre)->bas = NULL;
+}
+
+
 void creerArbre(Arbre arbre, int** labyrinthe, int x, int y, int hauteur, int largeur){
     Arbre** noeudsDejaVus = malloc(largeur * sizeof(Arbre*));
+    initArbre(&arbre);
     initNoeudsDejaVus(noeudsDejaVus, hauteur, largeur);
     creerArbreCache(arbre, labyrinthe, x, y, hauteur, largeur, noeudsDejaVus);
 }
 
 
 void creerArbreCache(Arbre arbre, int** labyrinthe, int x, int y, int hauteur, int largeur, Arbre** noeudsDejaVus){
-    printf("appel x : %d, y : %d\n", x, y);
     arbre->x = x;
     arbre->y = y;
     arbre->valeur = labyrinthe[y][x];
     noeudsDejaVus[x][y] = arbre;
-
     if (x - 1 >= 0 && labyrinthe[y][x - 1] != 2) {
-        printf("gauche\n");
         if (arbre->gauche == NULL) {
             arbre->gauche = noeudsDejaVus[x - 1][y];
             if (arbre->gauche != NULL) {
@@ -127,13 +134,12 @@ void creerArbreCache(Arbre arbre, int** labyrinthe, int x, int y, int hauteur, i
             }
         }
         if (arbre->gauche == NULL) {
-            arbre->gauche = malloc(sizeof(Noeud));
+            initArbre(&(arbre->gauche));
             arbre->gauche->droite = arbre;
             creerArbreCache(arbre->gauche, labyrinthe, x - 1, y, hauteur, largeur, noeudsDejaVus);
         }
     }
     if (x + 1 < largeur && labyrinthe[y][x + 1] != 2) {
-        printf("droite\n");
         if (arbre->droite == NULL) {
             arbre->droite = noeudsDejaVus[x + 1][y];
             if (arbre->droite != NULL) {
@@ -141,13 +147,12 @@ void creerArbreCache(Arbre arbre, int** labyrinthe, int x, int y, int hauteur, i
             }
         }
         if (arbre->droite == NULL) {
-            arbre->droite = malloc(sizeof(Noeud));
+            initArbre(&(arbre->droite));
             arbre->droite->gauche = arbre;
             creerArbreCache(arbre->droite, labyrinthe, x + 1, y, hauteur, largeur, noeudsDejaVus);
         }
     }
     if (y - 1 >= 0 && labyrinthe[y - 1][x] != 2) {
-        printf("haut\n");
         if (arbre->haut == NULL) {
             arbre->haut = noeudsDejaVus[x][y - 1];
             if (arbre->haut != NULL) {
@@ -155,13 +160,12 @@ void creerArbreCache(Arbre arbre, int** labyrinthe, int x, int y, int hauteur, i
             }
         }
         if (arbre->haut == NULL) {
-            arbre->haut = malloc(sizeof(Noeud));
+            initArbre(&(arbre->haut));  
             arbre->haut->bas = arbre;
             creerArbreCache(arbre->haut, labyrinthe, x, y - 1, hauteur, largeur, noeudsDejaVus);
         }
     }
     if (y + 1 < hauteur && labyrinthe[y + 1][x] != 2) {
-        printf("bas\n");
         if (arbre->bas == NULL) {
             arbre->bas = noeudsDejaVus[x][y + 1];
             if (arbre->bas != NULL) {
@@ -169,7 +173,7 @@ void creerArbreCache(Arbre arbre, int** labyrinthe, int x, int y, int hauteur, i
             }
         }
         if (arbre->bas == NULL) {
-            arbre->bas = malloc(sizeof(Noeud));
+            initArbre(&(arbre->bas));
             arbre->bas->haut = arbre;
             creerArbreCache(arbre->bas, labyrinthe, x, y + 1, hauteur, largeur, noeudsDejaVus);
         }
@@ -228,16 +232,8 @@ void afficherArbreCache(Arbre arbre, int** dejaVus) {
         printf("b(%d, %d) ", arbre->bas->x, arbre->bas->y);
     }
     printf("\n");
-    if (arbre->gauche != NULL) {
-        afficherArbreCache(arbre->gauche, dejaVus);
-    } 
-    if (arbre->droite != NULL) {
-        afficherArbreCache(arbre->droite, dejaVus);
-    }
-    if (arbre->haut != NULL) {
-        afficherArbreCache(arbre->haut, dejaVus);
-    }
-    if (arbre->bas != NULL) {
-        afficherArbreCache(arbre->bas, dejaVus);
-    }
+    afficherArbreCache(arbre->gauche, dejaVus);
+    afficherArbreCache(arbre->droite, dejaVus);
+    afficherArbreCache(arbre->haut, dejaVus);
+    afficherArbreCache(arbre->bas, dejaVus);
 }

@@ -40,7 +40,9 @@ void creerArbre(Arbre arbre, int** labyrinthe, int x, int y, int hauteur, int la
 void creerArbreCache(Arbre arbre, int** labyrinthe, int x, int y, int hauteur, int largeur, Arbre** noeudsDejaVus);
 void initNoeudsDejaVus(Arbre** NoeudsDejaVus, int hauteur, int largeur);
 void initDejaVus(int** dejaVus, int hauteur, int largeur);
-void afficherArbre(Arbre arbre, int** dejaVus);
+void initArbre(Arbre* arbre);
+void afficherArbre(Arbre arbre, int hauteur, int largeur);
+void afficherArbreCache(Arbre arbre, int** dejaVus);
 
 
 #endif
