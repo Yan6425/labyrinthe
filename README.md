@@ -26,3 +26,8 @@ Déplacement dans le jeu :
     Flèche haut/bas/droite/gauche pour se déplacer
 
 Saisir a pendant le déplacement dans le menu ou dans le labyrinthe pour arrêter le programme
+
+Lancement du jeu dans la console :
+Saisir ces 2 commandes :
+    make
+    ./labyrinthe.exe
