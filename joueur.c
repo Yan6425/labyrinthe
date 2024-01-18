@@ -7,7 +7,7 @@
 #include <string.h>
 
 Joueur creerJoueur(Joueur j,int difficulte){
-    j=malloc(7*sizeof(int));
+    j=malloc(sizeof(humain));
     j->x=1;
     j->y=1;
     j->vie=3;
@@ -168,7 +168,7 @@ void actionCase(int** labyrinthe, Joueur j,int hauteur,int largeur){
             break;        
         case 10:
             retirerPotion(labyrinthe,j);
-            (j->somnifere)=49;
+            (j->somnifere)=50;
             break;
         default : 
             break;
