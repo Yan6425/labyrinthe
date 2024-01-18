@@ -16,6 +16,7 @@ Présentation des objets :
     🛩️ : Avion permettant de passer au-dessus des trous
     🍺 : Flash devient bourré et ne marche plus dans le bon sens
     🗺️ : Carte qui permet de voir la totalité du labyrinthe pendant 5 secondes sans connaitre sa position
+    🧪 : Somnifere, quand il est pris il vous reste peu de mouvements avant que Flash ne s'endorme
         
 Déplacement dans le menu :
     Flèche haut/bas pour se déplacer dans le menu
