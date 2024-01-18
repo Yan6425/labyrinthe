@@ -60,9 +60,9 @@ int** allouerLabyrinthe(int n, int N){
 }
 
 void initialiserLabyrinthe(int** labyrinthe, int n, int N){
-    for (int x=0;x<n;x++){
-        for (int y=0;y<N;y++){
-            labyrinthe[x][y]=0;
+    for (int i=0;i<n;i++){
+        for (int j=0;j<N;j++){
+            labyrinthe[i][j]=0;
         }
     }
 }

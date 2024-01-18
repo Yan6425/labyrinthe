@@ -8,15 +8,15 @@
 
 void afficherLabyrinthe(int** labyrinthe,int hauteur, int largeur, Joueur joueur){
     printf("\n\r");
-    for (int i=(joueur->x)-(joueur->vision);i<=(joueur->x)+(joueur->vision);i++){
-        for (int j=(joueur->y)-(joueur->vision); j<=(joueur->y)+(joueur->vision); j++){
+    for (int i=(joueur->y)-(joueur->vision);i<=(joueur->y)+(joueur->vision);i++){
+        for (int j=(joueur->x)-(joueur->vision); j<=(joueur->x)+(joueur->vision); j++){
             if ((i<0) || (j<0) || (i>=hauteur) || (j>=largeur)){
                 printf("  ");
             }
             else if (labyrinthe[i][j]==2){
                 printf("⬛");
             }
-            else if ((joueur->x==i) && (joueur->y==j) && (labyrinthe[i][j]!=5)){
+            else if ((joueur->y==i) && (joueur->x==j) && (labyrinthe[i][j]!=5)){
                 printf("🦥");
             }
             else if (labyrinthe[i][j]==3){
@@ -26,7 +26,7 @@ void afficherLabyrinthe(int** labyrinthe,int hauteur, int largeur, Joueur joueur
                 printf("☕");
             }
             else if (labyrinthe[i][j]==5){
-                if (verifierAvion(joueur) && (joueur->x==i) && (joueur->y==j)){
+                if (verifierAvion(joueur) && (joueur->y==i) && (joueur->x==j)){
                     printf("🛩️ ");
                 }
                 else {
@@ -114,7 +114,7 @@ void afficherMort(int n,int** labyrinthe, int hauteur, int largeur, Joueur j,int
     afficherNiveau(n);
     afficherLabyrinthe(labyrinthe,hauteur,largeur,j);
     afficherVie(j);
-    if (labyrinthe[j->x][j->y]==5){
+    if (labyrinthe[j->y][j->x]==5){
         printf("\n\rVous êtes mort ! Pour réessayer appuyer sur entrée !");
     }
     else if (j->somnifere<=0){

@@ -8,12 +8,13 @@
 
 Joueur creerJoueur(Joueur j,int difficulte){
     j=malloc(sizeof(humain));
+    j->arbre=NULL;
     j->x=1;
     j->y=1;
     j->vie=3;
     j->avion=0;
     j->vision=2;
-    j->sens=1;
+    j->ivre=0;
     j->somnifere=1;
     return j;
 }
@@ -48,7 +49,7 @@ int caseLibre(Joueur j, char* sens){
 }
 
 int victoire(int** labyrinthe,Joueur j){
-    if (labyrinthe[j->x][j->y]==0){
+    if (labyrinthe[j->y][j->x]==0){
         return 1;
     }
     else {
@@ -61,36 +62,32 @@ void emptyBuffer() {
   while (((c = getchar()) != '\n') && (c != EOF));
 }
 
-Joueur haut(Joueur j){
+void haut(Joueur j){
     if (j->arbre->haut != NULL){
         j->arbre = j->arbre->haut;
         j->y--;
     }
-    return j;
 }
 
-Joueur bas(Joueur j){
+void bas(Joueur j){
     if (j->arbre->bas != NULL){
         j->arbre = j->arbre->bas;
         j->y++;
     }
-    return j;
 }
 
-Joueur droite(Joueur j){
+void droite(Joueur j){
     if (j->arbre->droite != NULL){
         j->arbre = j->arbre->droite;
         j->x++;
     }
-    return j;
 }
 
-Joueur gauche(Joueur j){
+void gauche(Joueur j){
     if (j->arbre->gauche != NULL){
         j->arbre = j->arbre->gauche;
         j->x--;
     }
-    return j;
 }
 
 Joueur degat(Joueur j,int damage){
@@ -141,15 +138,16 @@ int estMort(Joueur j){
 }
 
 int valeurCase(int** labyrinthe,Joueur j){
-    return labyrinthe[j->x][j->y]; 
+    return labyrinthe[j->y][j->x]; 
 }
 
 void retirerPotion(int** labyrinthe, Joueur j){
-    labyrinthe[j->x][j->y]=1;  
+    labyrinthe[j->y][j->x]=1;
+    j->arbre->valeur=1;
 }
 
-void actionCase(int** labyrinthe, Joueur j,int hauteur,int largeur){
-    int cellule=valeurCase(labyrinthe,j);
+void actionCase(int** labyrinthe, Joueur j, int hauteur, int largeur){
+    int cellule=j->arbre->valeur;
     switch(cellule){
         case 1:
             break;
@@ -193,7 +191,7 @@ void actionCase(int** labyrinthe, Joueur j,int hauteur,int largeur){
     }
 }
 
-int deplacement(Arbre arbre, int** labyrinthe,int n,Joueur j,int hauteur, int largeur,int* fin){
+int deplacement(int** labyrinthe,int n,Joueur j,int hauteur, int largeur,int* fin){
     struct termios tty_opts_backup, tty_opts_raw;
     char c;
     int pastermine=1;//par défaut on le met à vrai
@@ -245,7 +243,7 @@ int deplacement(Arbre arbre, int** labyrinthe,int n,Joueur j,int hauteur, int la
                             break;
                         case 'C':
                             if(j->ivre){
-                               if (caseLibre(j, "gauche")){
+                                if (caseLibre(j, "gauche")){
                                     gauche(j);
                                 } 
                             }
@@ -255,7 +253,7 @@ int deplacement(Arbre arbre, int** labyrinthe,int n,Joueur j,int hauteur, int la
                             break;
                         case 'D':
                             if(j->ivre){
-                               if (caseLibre(j,"droite")){
+                                if (caseLibre(j,"droite")){
                                     droite(j);
                                 } 
                             }
@@ -275,7 +273,7 @@ int deplacement(Arbre arbre, int** labyrinthe,int n,Joueur j,int hauteur, int la
             default:
                 break;
         }
-        actionCase(labyrinthe,j,hauteur,largeur);
+        actionCase(labyrinthe, j, hauteur, largeur);
         if (estMort(j)){   
             afficherMort(n,labyrinthe,hauteur,largeur,j,som);
             sleep(1);

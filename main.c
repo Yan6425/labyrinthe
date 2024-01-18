@@ -28,6 +28,7 @@ int main(){
         labyrinthe=allouerLabyrinthe(hauteur,largeur);
         initialiserLabyrinthe(labyrinthe,hauteur,largeur);
         lireTXT(nomFichier,labyrinthe);
+        j->arbre = creerArbre(labyrinthe, 1, 1, hauteur, largeur);
         deplacement(labyrinthe,i+1,j,hauteur,largeur,&fin);
         if (fin==1){
             break;

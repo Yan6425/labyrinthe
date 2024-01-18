@@ -11,7 +11,7 @@ Joueur creerJoueur(Joueur j,int difficulte);
 int verifierAvion(Joueur j);
 
 /* Vérifie si la case est libre */
-int caseLibre(int** labyrinthe,int hauteur, int largeur, int x, int y,Joueur j);
+int caseLibre(Joueur j, char* sens);
 
 /* Vérifie si le joueur a gagné */
 int victoire(int** labyrinthe,Joueur j);
@@ -20,16 +20,16 @@ int victoire(int** labyrinthe,Joueur j);
 void emptyBuffer();
 
 /* Déplacement vers le haut du joueur */
-Joueur haut(Joueur j);
+void haut(Joueur j);
 
 /* Déplacement vers le bas du joueur */
-Joueur bas(Joueur j);
+void bas(Joueur j);
 
 /* Déplacement vers la droite du joueur */
-Joueur droite(Joueur j);
+void droite(Joueur j);
 
 /* Déplacement vers la gauche du joueur */
-Joueur gauche(Joueur j);
+void gauche(Joueur j);
 
 /* Enlève de l'énergie au joueur */
 Joueur degat(Joueur j,int damage);
@@ -56,10 +56,10 @@ int valeurCase(int** labyrinthe,Joueur j);
 void retirerPotion(int** labyrinthe, Joueur j);
 
 /* Effectue l'action de la case sur laquelle le joueur est */
-void actionCase(int** labyrinthe,Joueur j,int hauteur,int largeur);
+void actionCase(int** labyrinthe, Joueur j, int hauteur, int largeur);
 
 /* Fonction principale du jeu qui permet d'utiliser les flèches du clavier pour se déplacer et d'autres touches (voir README) */
-int deplacement(int** labyrinthe,int n,Joueur j,int hauteur, int largeur,int* fin);
+int deplacement(int** labyrinthe, int n, Joueur j, int hauteur, int largeur, int* fin);
 
 
 // affichage.c
