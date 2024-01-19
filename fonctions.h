@@ -101,13 +101,19 @@ void initialiserLabyrinthe(int** labyrinthe, int n, int N);
 
 /* Lis le fichier .txt pour le transférer dans la matrice */
 void lireTXT(const char* nomFichier, int** labyrinthe);
-Arbre creerArbre(int** labyrinthe, int x, int y, int hauteur, int largeur);
+Arbre initArbre(int x, int y, int valeur, int nbCheckpoints);
 Arbre** initNoeudsDejaVus(int hauteur, int largeur);
-Arbre creerArbreCache(int** labyrinthe, int x, int y, int hauteur, int largeur, Arbre** noeudsDejaVus);
-Arbre initArbre(int x, int y, int valeur);
+int** initDejaVus(int hauteur, int largeur);
+Arbre creerArbre(int** labyrinthe, int x, int y, int hauteur, int largeur, int nbCheckpoints);
+Arbre creerArbreCache(int** labyrinthe, int x, int y, int hauteur, int largeur, Arbre** noeudsDejaVus, int nbCheckpoints);
 void afficherArbre(Arbre arbre, int hauteur, int largeur);
 void afficherArbreCache(Arbre arbre, int** dejaVus);
-int** initDejaVus(int hauteur, int largeur);
+void calculDistances(Arbre arbre, int hauteur, int largeur, int** coordsCheckpoints, int nbCheckpoints);
+Arbre trouverCheckpoints(int* coordsCheckpoints, Arbre arbre, int** dejaVus);
+void calcDistance(Arbre arbre, int numCheckpoint, int hauteur, int largeur);
+void calcDistanceCache(Arbre arbre, int numCheckpoint, int** dejaVus);
+int** fCoordsCheckpoints(int numLab);
+int nbCheckpoints(int numLab);
 
 
 // menu.c

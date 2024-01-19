@@ -10,7 +10,8 @@ typedef struct noeud{
     int x;
     int y;
     int valeur;
-    int distance;
+    int* distances;
+    int nbCheckpoints;
     struct noeud* haut;
     struct noeud* bas;
     struct noeud* gauche;

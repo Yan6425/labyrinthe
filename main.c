@@ -21,6 +21,8 @@ int main(){
     }
     for (int i=0;i<10;i++){
         const char* nomFichier=nomLab(i);
+        const int nbCheckpoints=fNbCheckpoints(i);
+        const int coordsCheckpoints[nbCheckpoints][2]=fCoordsCheckpoints(i);
         dimensionsLab(nomFichier,&hauteur,&largeur);
         j=malloc(1*sizeof(Joueur));
         j=creerJoueur(j,difficulte);
@@ -28,7 +30,8 @@ int main(){
         labyrinthe=allouerLabyrinthe(hauteur,largeur);
         initialiserLabyrinthe(labyrinthe,hauteur,largeur);
         lireTXT(nomFichier,labyrinthe);
-        j->arbre = creerArbre(labyrinthe, 1, 1, hauteur, largeur);
+        j->arbre = creerArbre(labyrinthe, 1, 1, hauteur, largeur, nbCheckpoints);
+        calculdistances(j->arbre, hauteur, largeur, coordsCheckpoints, nbCheckpoints);
         deplacement(labyrinthe,i+1,j,hauteur,largeur,&fin);
         if (fin==1){
             break;

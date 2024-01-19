@@ -104,9 +104,9 @@ void lireTXT(const char* nomFichier,int** labyrinthe){
 }
 
 
-Arbre creerArbre(int** labyrinthe, int x, int y, int hauteur, int largeur){
+Arbre creerArbre(int** labyrinthe, int x, int y, int hauteur, int largeur, int nbCheckpoints){
     Arbre** noeudsDejaVus = initNoeudsDejaVus(hauteur, largeur);
-    return creerArbreCache(labyrinthe, x, y, hauteur, largeur, noeudsDejaVus);
+    return creerArbreCache(labyrinthe, x, y, hauteur, largeur, noeudsDejaVus, nbCheckpoints);
 }
 
 
@@ -122,8 +122,8 @@ Arbre** initNoeudsDejaVus(int hauteur, int largeur){
 }
 
 
-Arbre creerArbreCache(int** labyrinthe, int x, int y, int hauteur, int largeur, Arbre** noeudsDejaVus){
-    Arbre arbre = initArbre(x, y, labyrinthe[y][x]);
+Arbre creerArbreCache(int** labyrinthe, int x, int y, int hauteur, int largeur, Arbre** noeudsDejaVus, int nbCheckpoints){
+    Arbre arbre = initArbre(x, y, labyrinthe[y][x], nbCheckpoints);
     noeudsDejaVus[x][y] = arbre;
 
     if (x - 1 >= 0 && labyrinthe[y][x - 1] != 2) {
@@ -134,7 +134,7 @@ Arbre creerArbreCache(int** labyrinthe, int x, int y, int hauteur, int largeur, 
             }
         }
         if (arbre->gauche == NULL) {
-            arbre->gauche = creerArbreCache(labyrinthe, x - 1, y, hauteur, largeur, noeudsDejaVus);
+            arbre->gauche = creerArbreCache(labyrinthe, x - 1, y, hauteur, largeur, noeudsDejaVus, nbCheckpoints);
         }
     }
     if (x + 1 < largeur && labyrinthe[y][x + 1] != 2) {
@@ -145,7 +145,7 @@ Arbre creerArbreCache(int** labyrinthe, int x, int y, int hauteur, int largeur, 
             }
         }
         if (arbre->droite == NULL) {
-            arbre->droite = creerArbreCache(labyrinthe, x + 1, y, hauteur, largeur, noeudsDejaVus);
+            arbre->droite = creerArbreCache(labyrinthe, x + 1, y, hauteur, largeur, noeudsDejaVus, nbCheckpoints);
         }
     }
     if (y - 1 >= 0 && labyrinthe[y - 1][x] != 2) {
@@ -156,7 +156,7 @@ Arbre creerArbreCache(int** labyrinthe, int x, int y, int hauteur, int largeur, 
             }
         }
         if (arbre->haut == NULL) {
-            arbre->haut = creerArbreCache(labyrinthe, x, y - 1, hauteur, largeur, noeudsDejaVus);
+            arbre->haut = creerArbreCache(labyrinthe, x, y - 1, hauteur, largeur, noeudsDejaVus, nbCheckpoints);
         }
     }
     if (y + 1 < hauteur && labyrinthe[y + 1][x] != 2) {
@@ -167,19 +167,23 @@ Arbre creerArbreCache(int** labyrinthe, int x, int y, int hauteur, int largeur, 
             }
         }
         if (arbre->bas == NULL) {
-            arbre->bas = creerArbreCache(labyrinthe, x, y + 1, hauteur, largeur, noeudsDejaVus);
+            arbre->bas = creerArbreCache(labyrinthe, x, y + 1, hauteur, largeur, noeudsDejaVus, nbCheckpoints);
         }
     }
     return arbre;
 }
 
 
-Arbre initArbre(int x, int y, int valeur){
+Arbre initArbre(int x, int y, int valeur, int nbCheckpoints){
     Arbre arbre = malloc(sizeof(Noeud));
     arbre->gauche = NULL;
     arbre->droite = NULL;
     arbre->haut = NULL;
     arbre->bas = NULL;
+    arbre->distances = malloc(nbCheckpoints * sizeof(int));
+    for (int i = 0; i < nbCheckpoints; i++) {
+        arbre->distances[i] = 999999;
+    }
     arbre->x = x;
     arbre->y = y;
     arbre->valeur = valeur;
@@ -202,9 +206,9 @@ void afficherArbreCache(Arbre arbre, int** dejaVus) {
     if (dejaVus[arbre->x][arbre->y]) {
         return;
     }
-
     dejaVus[arbre->x][arbre->y] = 1;
-    printf("Node content: %d (%d, %d) ", arbre->valeur, arbre->x, arbre->y);
+  
+    printf("Node content: %d distance : %d (%d, %d) ", arbre->valeur, (arbre->distances == NULL) ? 0 : arbre->distances[arbre->nbCheckpoints - 1], arbre->x, arbre->y);
     if (arbre->gauche != NULL) {
         printf("g(%d, %d) ", arbre->gauche->x, arbre->gauche->y);
     } 
@@ -234,4 +238,89 @@ int** initDejaVus(int hauteur, int largeur){
         }
     }
     return dejaVus;
+}
+
+
+void calculDistances(Arbre arbre, int hauteur, int largeur, int** coordsCheckpoints, int nbCheckpoints){
+    int** dejaVus = initDejaVus(hauteur, largeur);
+    for (int i = 0; i < nbCheckpoints; i++){
+        calcDistance(trouverCheckpoints(coordsCheckpoints[i], arbre, dejaVus), i, hauteur, largeur);
+    }
+}
+
+
+Arbre trouverCheckpoints(int* coordsCheckpoints, Arbre arbre, int** dejaVus){
+    if (arbre == NULL){
+        return NULL;
+    }
+    if (dejaVus[arbre->x][arbre->y]){
+        return NULL;
+    }
+    dejaVus[arbre->x][arbre->y] = 1;
+
+    if (arbre->x == coordsCheckpoints[0] && arbre->y == coordsCheckpoints[1]){
+        return arbre;
+    }
+    Arbre res = trouverCheckpoints(coordsCheckpoints, arbre->gauche, dejaVus);
+    res = (res == NULL) ? trouverCheckpoints(coordsCheckpoints, arbre->droite, dejaVus) : res;
+    res = (res == NULL) ? trouverCheckpoints(coordsCheckpoints, arbre->haut, dejaVus) : res;
+    res = (res == NULL) ? trouverCheckpoints(coordsCheckpoints, arbre->bas, dejaVus) : res;
+    return res;
+}
+
+
+void calcDistance(Arbre arbre, int numCheckpoint, int hauteur, int largeur){
+    int** dejaVus = initDejaVus(hauteur, largeur);
+    arbre->distances[numCheckpoint] = 0;
+    calcDistanceCache(arbre, numCheckpoint, dejaVus);
+}
+
+
+void calcDistanceCache(Arbre arbre, int numCheckpoint, int** dejaVus){
+    if (arbre == NULL){
+        return;
+    }
+    if (dejaVus[arbre->x][arbre->y]){
+        return;
+    }
+    dejaVus[arbre->x][arbre->y] = 1;
+
+    if (arbre->gauche != NULL && arbre->gauche->distances[numCheckpoint] > (arbre->distances[numCheckpoint] + 1)) {
+        arbre->gauche->distances[numCheckpoint] = arbre->distances[numCheckpoint] + 1;
+    } 
+    if (arbre->droite != NULL && arbre->droite->distances[numCheckpoint] > (arbre->distances[numCheckpoint] + 1)) {
+        arbre->droite->distances[numCheckpoint] = arbre->distances[numCheckpoint] + 1;
+    }
+    if (arbre->haut != NULL && arbre->haut->distances[numCheckpoint] > (arbre->distances[numCheckpoint] + 1)) {
+        arbre->haut->distances[numCheckpoint] = arbre->distances[numCheckpoint] + 1;
+    }
+    if (arbre->bas != NULL && arbre->bas->distances[numCheckpoint] > (arbre->distances[numCheckpoint] + 1)) {
+        arbre->bas->distances[numCheckpoint] = arbre->distances[numCheckpoint] + 1;
+    }
+    calcDistanceCache(arbre->gauche, numCheckpoint, dejaVus);
+    calcDistanceCache(arbre->droite, numCheckpoint, dejaVus);
+    calcDistanceCache(arbre->haut, numCheckpoint, dejaVus);
+    calcDistanceCache(arbre->bas, numCheckpoint, dejaVus);
+}
+
+
+int** fCoordsCheckpoints(int numLab){
+    switch (numLab){
+        case 0:
+            return {{6, 1}};
+        case 1:
+            return {{1, 3}};
+        case 2:
+            return {{3, 3}};
+        case 3:
+            return {{1, 5}};
+        case 4:
+            return {{3, 5}, {5, 9}};
+        case 5:
+            return {{3, 7}};
+        case 6:
+            return {{9, 9}, {1, 15}};
+        case 7:
+            return {{5, 6}, {}}
+    }
 }
