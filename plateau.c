@@ -303,28 +303,119 @@ void calcDistanceCache(Arbre arbre, int numCheckpoint, int** dejaVus){
     calcDistanceCache(arbre->bas, numCheckpoint, dejaVus);
 }
 
+int** initTabCoordCheckpoints(){
+    int** checkpoint=malloc(4*sizeof(int*));
+    for (int i=0;i<4;i++){
+        checkpoint[i]=malloc(2*sizeof(int));
+    }
+    return checkpoint;
+}
 
 int** fCoordsCheckpoints(int numLab){
+    int** checkpoint = initTabCoordCheckpoints();
     switch (numLab){
         case 0:
-            return {{6, 1}};
+            checkpoint[0][0]=6;
+            checkpoint[0][1]=1;
+            return checkpoint;
+            break;
         case 1:
-            return {{1, 3}};
+            checkpoint[0][0]=1;
+            checkpoint[0][1]=3;
+            return checkpoint;
+            break;
         case 2:
-            return {{3, 3}};
+            checkpoint[0][0]=3;
+            checkpoint[0][1]=3;
+            return checkpoint;
+            break;
         case 3:
-            return {{1, 5}};
+            checkpoint[0][0]=1;
+            checkpoint[0][1]=5;
+            return checkpoint;
+            break;
         case 4:
-            return {{3, 5}, {5, 9}};
+            checkpoint[0][0]=3;
+            checkpoint[0][1]=5;
+            checkpoint[1][0]=5;
+            checkpoint[1][1]=9;
+            return checkpoint;
+            break;
         case 5:
-            return {{3, 7}};
+            checkpoint[0][0]=3;
+            checkpoint[0][1]=7;
+            return checkpoint;
+            break;
         case 6:
-            return {{9, 9}, {1, 15}};
+            checkpoint[0][0]=9;
+            checkpoint[0][1]=9;
+            checkpoint[1][0]=1;
+            checkpoint[1][1]=15;
+            return checkpoint;
+            break;
         case 7:
-            return {{9, 7}, {1, 3}, {1, 3}, {15, 15}};
+            checkpoint[0][0]=10;
+            checkpoint[0][1]=3;
+            checkpoint[1][0]=1;
+            checkpoint[1][1]=3;
+            checkpoint[2][0]=1;
+            checkpoint[2][1]=15;
+            checkpoint[3][0]=15;
+            checkpoint[3][1]=15;
+            return checkpoint;
+            break;
         case 8:
-            return {{17, 13}};
+            checkpoint[0][0]=17;
+            checkpoint[0][1]=13;
+            return checkpoint;
+            break;
+        case 9:
+            checkpoint[0][0]=8;
+            checkpoint[0][1]=9;
+            checkpoint[1][0]=1;
+            checkpoint[1][1]=19;
+            return checkpoint;
+            break;
+        default:
+        return checkpoint;
+            break;
+    }
+}
+
+int nbCheckpoint(int i){
+    switch(i){
+        case 0:
+            return 1;
+            break;
+        case 1:
+            return 1;
+            break;
+        case 2:
+            return 1;
+            break;
+        case 3:
+            return 1;
+            break;
+        case 4:
+            return 2;
+            break;
+        case 5:
+            return 1;
+            break;
+        case 6:
+            return 2;
+            break;
+        case 7:
+            return 4;
+            break;
         case 8:
-            return {{8, 9}, {1, 19}};
+            return 1;
+            break;
+        case 9:
+            return 2;
+            break;
+        default:
+            return 0;
+            break;
     }
 }

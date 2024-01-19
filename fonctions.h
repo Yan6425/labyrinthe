@@ -59,7 +59,7 @@ void retirerPotion(int** labyrinthe, Joueur j);
 void actionCase(int** labyrinthe, Joueur j, int hauteur, int largeur);
 
 /* Fonction principale du jeu qui permet d'utiliser les flèches du clavier pour se déplacer et d'autres touches (voir README) */
-int deplacement(int** labyrinthe, int n, Joueur j, int hauteur, int largeur, int* fin);
+int deplacement(int** labyrinthe, int n, Joueur j, int hauteur, int largeur, int* fin, int** checkpoints, int nbCheckpoints);
 
 void parcoursAuto(Joueur j, int** checkpoints, int nbCheckpoints, int** labyrinthe, int hauteur, int largeur);
 
@@ -117,7 +117,7 @@ Arbre trouverCheckpoints(int* coordsCheckpoints, Arbre arbre, int** dejaVus);
 void calcDistance(Arbre arbre, int numCheckpoint, int hauteur, int largeur);
 void calcDistanceCache(Arbre arbre, int numCheckpoint, int** dejaVus);
 int** fCoordsCheckpoints(int numLab);
-int nbCheckpoints(int numLab);
+int nbCheckpoint(int numLab);
 
 
 // menu.c

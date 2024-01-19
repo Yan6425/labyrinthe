@@ -186,7 +186,7 @@ void actionCase(int** labyrinthe, Joueur j, int hauteur, int largeur){
     }
 }
 
-int deplacement(int** labyrinthe,int n,Joueur j,int hauteur, int largeur,int* fin){
+int deplacement(int** labyrinthe,int n,Joueur j,int hauteur, int largeur,int* fin, int** checkpoints, int nbCheckpoints){
     struct termios tty_opts_backup, tty_opts_raw;
     char c;
     int pastermine=1;//par défaut on le met à vrai
@@ -265,6 +265,8 @@ int deplacement(int** labyrinthe,int n,Joueur j,int hauteur, int largeur,int* fi
                 pastermine=0;
                 *fin=1;
                 break;
+            case 112:
+                parcoursAuto(j, checkpoints, nbCheckpoints, labyrinthe, hauteur, largeur);
             default:
                 break;
         }
