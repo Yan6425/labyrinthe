@@ -101,12 +101,26 @@ void initialiserLabyrinthe(int** labyrinthe, int n, int N);
 
 /* Lis le fichier .txt pour le transférer dans la matrice */
 void lireTXT(const char* nomFichier, int** labyrinthe);
+
+/* Crée l'arbre */
 Arbre creerArbre(int** labyrinthe, int x, int y, int hauteur, int largeur);
+
+/* Crée le tableau de noeuds */
 Arbre** initNoeudsDejaVus(int hauteur, int largeur);
+
+/* Crée l'arbe cache */
 Arbre creerArbreCache(int** labyrinthe, int x, int y, int hauteur, int largeur, Arbre** noeudsDejaVus);
+
+/* Initialise l'arbre */
 Arbre initArbre(int x, int y, int valeur);
+
+/* Affiche l'arbre (fonction de test) */
 void afficherArbre(Arbre arbre, int hauteur, int largeur);
+
+/* Affiche l'arbre cache (fonction de test) */
 void afficherArbreCache(Arbre arbre, int** dejaVus);
+
+/* Initialise le tableau d'entier dejaVus */
 int** initDejaVus(int hauteur, int largeur);
 
 
