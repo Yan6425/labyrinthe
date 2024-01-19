@@ -13,7 +13,7 @@ Joueur creerJoueur(Joueur j,int difficulte){
     j->y=1;
     j->vie=3;
     j->avion=0;
-    j->vision=2;
+    j->vision=difficulte;
     j->ivre=0;
     j->somnifere=1;
     return j;
