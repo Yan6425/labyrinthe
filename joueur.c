@@ -48,13 +48,8 @@ int caseLibre(Joueur j, char* sens){
     }
 }
 
-int victoire(int** labyrinthe,Joueur j){
-    if (labyrinthe[j->y][j->x]==0){
-        return 1;
-    }
-    else {
-        return 0;
-    }
+int victoire(Joueur j){
+    return !(j->arbre->valeur);
 }
 
 void emptyBuffer() {
@@ -280,7 +275,7 @@ int deplacement(int** labyrinthe,int n,Joueur j,int hauteur, int largeur,int* fi
             pastermine=0;
             *fin=2;
         }
-        if (victoire(labyrinthe,j)){
+        if (victoire(j)){
             afficherVictoire(n,labyrinthe,hauteur,largeur,j);
             pastermine=0;
         }
@@ -293,4 +288,39 @@ int deplacement(int** labyrinthe,int n,Joueur j,int hauteur, int largeur,int* fi
 
     printf("\n");
     return 0;
+}
+
+
+void parcoursAuto(Joueur j, int** checkpoints, int nbCheckpoints, int** labyrinthe, int hauteur, int largeur){
+    for (int i=0; i<nbCheckpoints; i++){
+        parcoursAutoCache(j, i, checkpoints[i][0], checkpoints[i][1], labyrinthe, hauteur, largeur);
+    }
+}
+
+void parcoursAutoCache(Joueur j, int numCheckpoint, int x, int y, int** labyrinthe, int hauteur, int largeur){
+    afficherLabyrinthe(labyrinthe, hauteur, largeur, j);
+    if (j->x == x && j->y == y){
+        return;
+    }
+    char* sens = (j->arbre->gauche->distances[numCheckpoint] < j->arbre->droite->distances[numCheckpoint]) ? "gauche" : "droite";
+    sens = (j->arbre->droite->distances[numCheckpoint] < j->arbre->haut->distances[numCheckpoint]) ? "droite" : "haut";
+    sens = (j->arbre->haut->distances[numCheckpoint] < j->arbre->bas->distances[numCheckpoint]) ? "haut" : "bas";
+    switch (sens[0]){
+        case 'g':
+            gauche(j);
+            break;
+        case 'd':
+            droite(j);
+            break;
+        case 'h':
+            haut(j);
+            break;
+        case 'b':
+            bas(j);
+            break;
+        default:
+            break;
+    }
+    actionCase(labyrinthe, j, hauteur, largeur);
+    parcoursAutoCache(j, numCheckpoint, x, y, labyrinthe, hauteur, largeur);
 }

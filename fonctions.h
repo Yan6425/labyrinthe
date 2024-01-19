@@ -14,7 +14,7 @@ int verifierAvion(Joueur j);
 int caseLibre(Joueur j, char* sens);
 
 /* Vérifie si le joueur a gagné */
-int victoire(int** labyrinthe,Joueur j);
+int victoire(Joueur j);
 
 /* Vide le buffer */
 void emptyBuffer();
@@ -60,6 +60,10 @@ void actionCase(int** labyrinthe, Joueur j, int hauteur, int largeur);
 
 /* Fonction principale du jeu qui permet d'utiliser les flèches du clavier pour se déplacer et d'autres touches (voir README) */
 int deplacement(int** labyrinthe, int n, Joueur j, int hauteur, int largeur, int* fin);
+
+void parcoursAuto(Joueur j, int** checkpoints, int nbCheckpoints, int** labyrinthe, int hauteur, int largeur);
+
+void parcoursAutoCache(Joueur j, int numCheckpoint, int x, int y, int** labyrinthe, int hauteur, int largeur);
 
 
 // affichage.c
