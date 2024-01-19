@@ -321,6 +321,10 @@ int** fCoordsCheckpoints(int numLab){
         case 6:
             return {{9, 9}, {1, 15}};
         case 7:
-            return {{5, 6}, {}}
+            return {{9, 7}, {1, 3}, {1, 3}, {15, 15}};
+        case 8:
+            return {{17, 13}};
+        case 8:
+            return {{8, 9}, {1, 19}};
     }
 }
